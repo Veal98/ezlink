@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="40821559-02c5-4616-980b-3d0f39e0cd4b" name="变更" comment="" />
+    <list default="true" id="40821559-02c5-4616-980b-3d0f39e0cd4b" name="变更" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,6 +19,9 @@
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/ddd-ezlink-domain/src/main/java/cn/itmtx/ddd/ezlink/domain/transform/domainservice/CompressionCodeDomain.java" root0="SKIP_INSPECTION" />
@@ -36,6 +41,7 @@
     </option>
   </component>
   <component name="ProjectId" id="2TfHBsy1fjBud7NQHg80ZdpnAOC" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -132,12 +138,23 @@
       <workItem from="1691901001851" duration="3245000" />
       <workItem from="1691904742238" duration="162000" />
       <workItem from="1691914386334" duration="7084000" />
-      <workItem from="1692460086088" duration="21323000" />
+      <workItem from="1692460086088" duration="22516000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
