@@ -3,15 +3,19 @@ package cn.itmtx.ddd.ezlink.domain.transform.domainservice;
 import cn.itmtx.ddd.ezlink.client.dto.UrlMapAddCmd;
 import cn.itmtx.ddd.ezlink.client.dto.data.UrlMapDTO;
 import cn.itmtx.ddd.ezlink.component.keygen.SequenceGenerator;
+import cn.itmtx.ddd.ezlink.component.dl.lock.DistributedLockFactory;
 import cn.itmtx.ddd.ezlink.domain.transform.CompressionCodeDO;
 import cn.itmtx.ddd.ezlink.domain.transform.CompressionCodeStatus;
 import cn.itmtx.ddd.ezlink.domain.transform.DomainConfDO;
 import cn.itmtx.ddd.ezlink.domain.transform.UrlMapDO;
 import cn.itmtx.ddd.ezlink.domain.transform.assembler.UrlMapDOAssembler;
+import cn.itmtx.ddd.ezlink.domain.transform.enums.LockKeyEnum;
 import cn.itmtx.ddd.ezlink.domain.transform.gateway.CompressionCodeGateway;
 import cn.itmtx.ddd.ezlink.domain.transform.gateway.DomainConfGateway;
 import cn.itmtx.ddd.ezlink.domain.transform.gateway.UrlMapGateway;
 import cn.itmtx.ddd.ezlink.domain.transform.util.ConversionUtils;
+import com.alibaba.cola.exception.BizException;
+import org.redisson.api.RLock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -19,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class CompressionCodeDomain {
@@ -52,6 +57,9 @@ public class CompressionCodeDomain {
 
     @Autowired
     private UrlMapDOAssembler urlMapDOAssembler;
+
+    @Autowired
+    private DistributedLockFactory distributedLockFactory;
 
     /**
      * 批量生成 62 进制压缩码
@@ -103,25 +111,34 @@ public class CompressionCodeDomain {
      * @return
      */
     public UrlMapDTO createUrlMap(UrlMapAddCmd urlMapAddCmd) {
-        UrlMapDO urlMapDO = new UrlMapDO();
+        RLock lock = distributedLockFactory.getLock(LockKeyEnum.CREATE_URL_MAP.getCode());
+        try {
+            lock.lock(LockKeyEnum.CREATE_URL_MAP.getReleaseTime(), TimeUnit.MILLISECONDS);
+            UrlMapDO urlMapDO = new UrlMapDO();
 
-        urlMapDO.setLongUrl(urlMapAddCmd.getLongUrl());
-        urlMapDO.setDescription(urlMapAddCmd.getDescription());
+            urlMapDO.setLongUrl(urlMapAddCmd.getLongUrl());
+            urlMapDO.setDescription(urlMapAddCmd.getDescription());
 
-        // 获取压缩码
-        CompressionCodeDO compressionCodeDO = this.getAvailableCompressionCodeDO();
-        String compressionCode = compressionCodeDO.getCompressionCode();
-        urlMapDO.setCompressionCode(compressionCode);
+            // 获取压缩码
+            CompressionCodeDO compressionCodeDO = this.getAvailableCompressionCodeDO();
+            String compressionCode = compressionCodeDO.getCompressionCode();
+            urlMapDO.setCompressionCode(compressionCode);
 
-        // 生成短链
-        String shortUrl = generateShortUrl(compressionCode);
-        urlMapDO.setShortUrl(shortUrl);
+            // 生成短链
+            String shortUrl = generateShortUrl(compressionCode);
+            urlMapDO.setShortUrl(shortUrl);
 
-        // 插入表 url_map + 更新表 compression_code
-        compressionCodeDO.setCodeStatus(CompressionCodeStatus.USED.getValue());
-        this.saveUrlMapAndUpdateCompressCode(urlMapDO, compressionCodeDO);
+            // 插入表 url_map + 更新表 compression_code
+            compressionCodeDO.setCodeStatus(CompressionCodeStatus.USED.getValue());
+            this.saveUrlMapAndUpdateCompressCode(urlMapDO, compressionCodeDO);
 
-        return urlMapDOAssembler.toUrlMapDTO(urlMapDO);
+            return urlMapDOAssembler.toUrlMapDTO(urlMapDO);
+        } catch (Exception e) {
+            // 向上抛出，最外层有 @CatchAndLog 注解用来处理异常和打印日志
+            throw new BizException("createUrlMap failed!");
+        } finally {
+            lock.unlock();
+        }
     }
 
 

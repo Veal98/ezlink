@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cn.itmtx.ddd.ezlink</groupId>
@@ -7,6 +8,18 @@
     <version>1.0.0</version>
     <packaging>pom</packaging>
     <name>ddd-ezlink</name>
+
+    <modules>
+        <module>ddd-ezlink-client</module>
+        <module>ddd-ezlink-adapter</module>
+        <module>ddd-ezlink-app</module>
+        <module>ddd-ezlink-domain</module>
+        <module>ddd-ezlink-infrastructure</module>
+        <module>ddd-ezlink-component-keygen</module>
+        <module>ddd-ezlink-component-dl</module>
+        <module>start</module>
+
+    </modules>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -19,6 +32,7 @@
         <mybatis-starter.version>2.2.2</mybatis-starter.version>
         <mybatis-generator-maven-plugin.version>1.4.0</mybatis-generator-maven-plugin.version>
         <apache-commons-lang3.version>3.12.0</apache-commons-lang3.version>
+        <redisson.version>3.11.5</redisson.version>
     </properties>
 
     <dependencies>
@@ -64,7 +78,12 @@
             </dependency>
             <dependency>
                 <groupId>cn.itmtx.ddd.ezlink.component</groupId>
-                <artifactId>ddd-ezlink-component</artifactId>
+                <artifactId>ddd-ezlink-component-keygen</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.itmtx.ddd.ezlink.component</groupId>
+                <artifactId>ddd-ezlink-component-dl</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!--Project modules End-->
@@ -116,6 +135,13 @@
                 <version>${apache-commons-lang3.version}</version>
             </dependency>
 
+            <!--Redisson-->
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson</artifactId>
+                <version>${redisson.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -139,7 +165,7 @@
                     <version>3.4.0</version>
                 </plugin>
                 <plugin>
-                     <artifactId>maven-deploy-plugin</artifactId>
+                    <artifactId>maven-deploy-plugin</artifactId>
                     <version>3.0.0</version>
                 </plugin>
 
@@ -157,12 +183,4 @@
             </plugins>
         </pluginManagement>
     </build>
-<modules>  <module>ddd-ezlink-client</module>
-    <module>ddd-ezlink-adapter</module>
-    <module>ddd-ezlink-app</module>
-    <module>ddd-ezlink-domain</module>
-    <module>ddd-ezlink-infrastructure</module>
-    <module>start</module>
-    <module>ddd-ezlink-component</module>
-</modules>
 </project>
