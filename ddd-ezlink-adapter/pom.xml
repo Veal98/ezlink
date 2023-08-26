@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>cn.itmtx.ddd.ezlink</groupId>
+        <artifactId>ddd-ezlink</artifactId>
+        <version>1.0.0</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>ddd-ezlink-adapter</artifactId>
+    <packaging>jar</packaging>
+    <name>ddd-ezlink-adapter</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>cn.itmtx.ddd.ezlink</groupId>
+            <artifactId>ddd-ezlink-app</artifactId>
+        </dependency>
+    </dependencies>
+</project>

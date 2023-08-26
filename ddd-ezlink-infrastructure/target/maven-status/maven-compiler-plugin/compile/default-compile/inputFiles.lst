@@ -1,0 +1,8 @@
+/Users/yjc/Documents/Code-Projects/ddd-ezlink/ddd-ezlink-infrastructure/src/main/java/cn/itmtx/ddd/ezlink/infrastructure/order/OrderGatewayImpl.java
+/Users/yjc/Documents/Code-Projects/ddd-ezlink/ddd-ezlink-infrastructure/src/main/java/cn/itmtx/ddd/ezlink/infrastructure/customer/po/Customer.java
+/Users/yjc/Documents/Code-Projects/ddd-ezlink/ddd-ezlink-infrastructure/src/main/java/cn/itmtx/ddd/ezlink/infrastructure/customer/mapper/CustomerMapper.java
+/Users/yjc/Documents/Code-Projects/ddd-ezlink/ddd-ezlink-infrastructure/src/main/java/cn/itmtx/ddd/ezlink/infrastructure/customer/CustomerGatewayImpl.java
+/Users/yjc/Documents/Code-Projects/ddd-ezlink/ddd-ezlink-infrastructure/src/main/java/cn/itmtx/ddd/ezlink/infrastructure/customer/CreditGatewayImpl.java
+/Users/yjc/Documents/Code-Projects/ddd-ezlink/ddd-ezlink-infrastructure/src/main/java/cn/itmtx/ddd/ezlink/infrastructure/config/MyBatisConfig.java
+/Users/yjc/Documents/Code-Projects/ddd-ezlink/ddd-ezlink-infrastructure/src/main/java/cn/itmtx/ddd/ezlink/infrastructure/customer/assembler/CustomerAssembler.java
+/Users/yjc/Documents/Code-Projects/ddd-ezlink/ddd-ezlink-infrastructure/src/main/java/cn/itmtx/ddd/ezlink/infrastructure/customer/po/CustomerExample.java
