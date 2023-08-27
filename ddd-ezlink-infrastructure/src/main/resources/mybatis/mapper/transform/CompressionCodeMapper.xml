@@ -77,7 +77,7 @@
     creator, editor, deleted, version
   </sql>
 
-  <resultMap id="DOResultMap" type="cn.itmtx.ddd.ezlink.domain.transform.CompressionCodeDO">
+  <resultMap id="DOResultMap" type="cn.itmtx.ddd.ezlink.domain.CompressionCodeDO">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="compression_code" jdbcType="VARCHAR" property="compressionCode" />
     <result column="code_status" jdbcType="TINYINT" property="codeStatus" />

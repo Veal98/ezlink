@@ -1,8 +1,7 @@
-package cn.itmtx.ddd.ezlink.domain.transform.assembler;
+package cn.itmtx.ddd.ezlink.domain.assembler;
 
 import cn.itmtx.ddd.ezlink.client.dto.data.UrlMapDTO;
-import cn.itmtx.ddd.ezlink.domain.transform.CompressionCodeDO;
-import cn.itmtx.ddd.ezlink.domain.transform.UrlMapDO;
+import cn.itmtx.ddd.ezlink.domain.UrlMapDO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 

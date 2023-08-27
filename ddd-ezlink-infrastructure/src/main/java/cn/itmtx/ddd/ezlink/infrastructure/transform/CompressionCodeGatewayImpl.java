@@ -1,7 +1,7 @@
 package cn.itmtx.ddd.ezlink.infrastructure.transform;
 
-import cn.itmtx.ddd.ezlink.domain.transform.CompressionCodeDO;
-import cn.itmtx.ddd.ezlink.domain.transform.gateway.CompressionCodeGateway;
+import cn.itmtx.ddd.ezlink.domain.CompressionCodeDO;
+import cn.itmtx.ddd.ezlink.domain.gateway.CompressionCodeGateway;
 import cn.itmtx.ddd.ezlink.infrastructure.transform.assembler.CompressionCodeAssembler;
 import cn.itmtx.ddd.ezlink.infrastructure.transform.mapper.CompressionCodeMapper;
 import org.springframework.beans.factory.annotation.Autowired;

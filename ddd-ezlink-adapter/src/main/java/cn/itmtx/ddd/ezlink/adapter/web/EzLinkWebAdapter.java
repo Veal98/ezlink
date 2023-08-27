@@ -10,7 +10,6 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/ezlink")
 public class EzLinkWebAdapter {
 
     @Autowired
@@ -24,7 +23,7 @@ public class EzLinkWebAdapter {
      */
     @GetMapping("/{compressionCode}")
     public Mono<Void> dispatch(@PathVariable(name="compressionCode") String compressionCode, ServerWebExchange exchange) {
-        return Mono.fromRunnable(null);
+        return ezLinkService.dispatch(compressionCode, exchange);
     }
 
     /**

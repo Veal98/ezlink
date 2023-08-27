@@ -1,4 +1,4 @@
-package cn.itmtx.ddd.ezlink.domain.transform.enums;
+package cn.itmtx.ddd.ezlink.domain.enums;
 
 public enum LockKeyEnum {
     /**

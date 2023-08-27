@@ -1,6 +1,6 @@
 package cn.itmtx.ddd.ezlink.infrastructure.transform.assembler;
 
-import cn.itmtx.ddd.ezlink.domain.transform.CompressionCodeDO;
+import cn.itmtx.ddd.ezlink.domain.CompressionCodeDO;
 import cn.itmtx.ddd.ezlink.infrastructure.transform.po.CompressionCode;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;

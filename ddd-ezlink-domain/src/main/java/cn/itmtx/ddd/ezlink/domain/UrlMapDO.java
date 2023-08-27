@@ -1,4 +1,4 @@
-package cn.itmtx.ddd.ezlink.domain.transform;
+package cn.itmtx.ddd.ezlink.domain;
 
 import java.util.Date;
 

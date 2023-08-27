@@ -1,6 +1,6 @@
 package cn.itmtx.ddd.ezlink.infrastructure.transform.mapper;
 
-import cn.itmtx.ddd.ezlink.domain.transform.DomainConfDO;
+import cn.itmtx.ddd.ezlink.domain.DomainConfDO;
 import cn.itmtx.ddd.ezlink.infrastructure.transform.po.DomainConf;
 import cn.itmtx.ddd.ezlink.infrastructure.transform.po.DomainConfExample;
 import java.util.List;

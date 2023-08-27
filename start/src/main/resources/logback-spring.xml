@@ -11,7 +11,8 @@
         <!--定义日志输出的路径-->
         <file>${LOG_FILE}</file>
         <encoder>
-            <pattern>${FILE_LOG_PATTERN}</pattern>
+<!--            <pattern>${FILE_LOG_PATTERN}</pattern>-->
+            <pattern>[%date{ISO8601}] [%level] %logger{80} [%thread] [%X{TRACE_ID}] ${dev-group-name} ${app-name} - %msg%n</pattern>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <fileNamePattern>${LOG_FILE}.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
@@ -23,7 +24,8 @@
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+<!--            <pattern>${CONSOLE_LOG_PATTERN}</pattern>-->
+            <pattern>[%date{ISO8601}] [%level] %logger{80} [%thread] [%X{TRACE_ID}] - %msg%n</pattern>
             <charset>utf8</charset>
         </encoder>
     </appender>
@@ -37,7 +39,7 @@
 
     <!--应用日志-->
     <!--这个logger没有指定appender，它会继承root节点中定义的那些appender-->
-    <logger name="com.alibaba.demo" level="DEBUG"/>
+    <logger name="cn.itmtx.ddd.ezlink" level="DEBUG"/>
 
     <!--数据库日志-->
     <!--由于这个logger自动继承了root的appender，root中已经有stdout的appender了，自己这边又引入了stdout的appender-->

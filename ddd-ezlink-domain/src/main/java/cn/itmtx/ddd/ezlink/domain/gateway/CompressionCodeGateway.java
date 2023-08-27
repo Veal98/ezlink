@@ -1,6 +1,6 @@
-package cn.itmtx.ddd.ezlink.domain.transform.gateway;
+package cn.itmtx.ddd.ezlink.domain.gateway;
 
-import cn.itmtx.ddd.ezlink.domain.transform.CompressionCodeDO;
+import cn.itmtx.ddd.ezlink.domain.CompressionCodeDO;
 
 public interface CompressionCodeGateway {
 

@@ -1,4 +1,4 @@
-package cn.itmtx.ddd.ezlink.domain.transform;
+package cn.itmtx.ddd.ezlink.domain;
 
 /**
  * 压缩码状态

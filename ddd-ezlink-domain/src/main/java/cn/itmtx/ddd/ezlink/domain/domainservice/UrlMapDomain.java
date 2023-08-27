@@ -1,20 +1,24 @@
-package cn.itmtx.ddd.ezlink.domain.transform.domainservice;
+package cn.itmtx.ddd.ezlink.domain.domainservice;
 
 import cn.itmtx.ddd.ezlink.client.dto.UrlMapAddCmd;
 import cn.itmtx.ddd.ezlink.client.dto.data.UrlMapDTO;
 import cn.itmtx.ddd.ezlink.component.keygen.SequenceGenerator;
 import cn.itmtx.ddd.ezlink.component.dl.lock.DistributedLockFactory;
-import cn.itmtx.ddd.ezlink.domain.transform.CompressionCodeDO;
-import cn.itmtx.ddd.ezlink.domain.transform.CompressionCodeStatus;
-import cn.itmtx.ddd.ezlink.domain.transform.DomainConfDO;
-import cn.itmtx.ddd.ezlink.domain.transform.UrlMapDO;
-import cn.itmtx.ddd.ezlink.domain.transform.assembler.UrlMapDOAssembler;
-import cn.itmtx.ddd.ezlink.domain.transform.enums.LockKeyEnum;
-import cn.itmtx.ddd.ezlink.domain.transform.gateway.CompressionCodeGateway;
-import cn.itmtx.ddd.ezlink.domain.transform.gateway.DomainConfGateway;
-import cn.itmtx.ddd.ezlink.domain.transform.gateway.UrlMapGateway;
-import cn.itmtx.ddd.ezlink.domain.transform.util.ConversionUtils;
+import cn.itmtx.ddd.ezlink.domain.CompressionCodeDO;
+import cn.itmtx.ddd.ezlink.domain.CompressionCodeStatus;
+import cn.itmtx.ddd.ezlink.domain.DomainConfDO;
+import cn.itmtx.ddd.ezlink.domain.UrlMapDO;
+import cn.itmtx.ddd.ezlink.domain.assembler.UrlMapDOAssembler;
+import cn.itmtx.ddd.ezlink.domain.context.TransformContext;
+import cn.itmtx.ddd.ezlink.domain.enums.LockKeyEnum;
+import cn.itmtx.ddd.ezlink.domain.filter.TransformFilterChain;
+import cn.itmtx.ddd.ezlink.domain.filter.TransformFilterChainFactory;
+import cn.itmtx.ddd.ezlink.domain.gateway.CompressionCodeGateway;
+import cn.itmtx.ddd.ezlink.domain.gateway.DomainConfGateway;
+import cn.itmtx.ddd.ezlink.domain.gateway.UrlMapGateway;
+import cn.itmtx.ddd.ezlink.domain.util.ConversionUtils;
 import com.alibaba.cola.exception.BizException;
+import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,7 +30,8 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 @Service
-public class CompressionCodeDomain {
+@Slf4j
+public class UrlMapDomain {
 
     @Resource(name = "${ezlink.generate.sequence-generator.type}SequenceGenerator")
     private SequenceGenerator sequenceGenerator;
@@ -44,9 +49,6 @@ public class CompressionCodeDomain {
     private String defaultDomain;
 
     @Autowired
-    private ConversionUtils conversionUtils;
-
-    @Autowired
     private CompressionCodeGateway compressionCodeGateway;
 
     @Autowired
@@ -61,49 +63,8 @@ public class CompressionCodeDomain {
     @Autowired
     private DistributedLockFactory distributedLockFactory;
 
-    /**
-     * 批量生成 62 进制压缩码
-     */
-    private void generateBatchCompressionCode() {
-        for (int i = 0; i < compressionCodeGenerateBatchNum; i ++) {
-            CompressionCodeDO compressionCodeDO = new CompressionCodeDO();
-            compressionCodeDO.setStrategy(strategy);
-            // 生成 10 进制压缩码
-            long sequence = sequenceGenerator.generate();
-            compressionCodeDO.setSequenceValue(String.valueOf(sequence));
-            // 10 进制转 62 进制
-            String code = conversionUtils.encode62(sequence);
-            compressionCodeDO.setCompressionCode(code);
-
-            // 存入数据库表 `compression_code`
-            compressionCodeGateway.insertCompressionCodeDO(compressionCodeDO);
-        }
-    }
-
-    /**
-     * 获取一个可用的压缩码
-     * @return
-     */
-    private CompressionCodeDO getAvailableCompressionCodeDO() {
-        CompressionCodeDO compressionCodeDO = compressionCodeGateway.getLatestAvailableCompressionCodeDO();
-        if (Objects.nonNull(compressionCodeDO)) {
-            return compressionCodeDO;
-        }
-
-        generateBatchCompressionCode();
-        return compressionCodeGateway.getLatestAvailableCompressionCodeDO();
-    }
-
-    /**
-     * 生成 shorturl
-     * @param compressionCode
-     * @return
-     */
-    private String generateShortUrl(String compressionCode) {
-        DomainConfDO domainConfDO = domainConfGateway.getDomainConfDOByDomainValue(defaultDomain);
-        String protocol = domainConfDO.getProtocol();
-        return String.format("%s://%s/%s", protocol, defaultDomain, compressionCode);
-    }
+    @Autowired
+    private TransformFilterChainFactory transformFilterChainFactory;
 
     /**
      * 创建短链映射
@@ -153,5 +114,71 @@ public class CompressionCodeDomain {
         urlMapGateway.insertUrlMapDO(urlMapDO);
         // 更新表 compression_code
         compressionCodeGateway.updateByPrimaryKeySelective(compressionCodeDO);
+    }
+
+    /**
+     * 处理 URL 转换
+     * @param context
+     */
+    public void processTransform(TransformContext context) {
+        long start = System.nanoTime();
+        if (log.isDebugEnabled()) {
+            log.debug("Start ProcessTransform...");
+        }
+        // 构建过滤器链
+        TransformFilterChain chain = transformFilterChainFactory.buildTransformFilterChain(context);
+        try {
+            chain.doFilter(context);
+        } finally {
+            chain.release();
+            context.release();
+            if (log.isDebugEnabled()) {
+                log.debug("End ProcessTransform,cost {} ms...", TimeUnit.NANOSECONDS.toMillis((System.nanoTime() - start)));
+            }
+        }
+    }
+
+    /**
+     * 批量生成 62 进制压缩码
+     */
+    private void generateBatchCompressionCode() {
+        for (int i = 0; i < compressionCodeGenerateBatchNum; i ++) {
+            CompressionCodeDO compressionCodeDO = new CompressionCodeDO();
+            compressionCodeDO.setStrategy(strategy);
+            // 生成 10 进制压缩码
+            long sequence = sequenceGenerator.generate();
+            compressionCodeDO.setSequenceValue(String.valueOf(sequence));
+            // 10 进制转 62 进制
+            String code = ConversionUtils.X.encode62(sequence);
+            compressionCodeDO.setCompressionCode(code);
+
+            // 存入数据库表 `compression_code`
+            compressionCodeGateway.insertCompressionCodeDO(compressionCodeDO);
+        }
+    }
+
+    /**
+     * 获取一个可用的压缩码
+     * @return
+     */
+    private CompressionCodeDO getAvailableCompressionCodeDO() {
+        CompressionCodeDO compressionCodeDO = compressionCodeGateway.getLatestAvailableCompressionCodeDO();
+        if (Objects.nonNull(compressionCodeDO)) {
+            return compressionCodeDO;
+        }
+
+        generateBatchCompressionCode();
+        return compressionCodeGateway.getLatestAvailableCompressionCodeDO();
+    }
+
+    /**
+     * 生成 shorturl
+     * @param compressionCode
+     * @return
+     */
+    private String generateShortUrl(String compressionCode) {
+        DomainConfDO domainConfDO = domainConfGateway.getDomainConfDOByDomainValue(defaultDomain);
+        String protocol = domainConfDO.getProtocol();
+        return String.format("%s://%s/%s", protocol, defaultDomain, compressionCode);
     }
 }

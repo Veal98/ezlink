@@ -1,11 +1,15 @@
-package cn.itmtx.ddd.ezlink.domain.transform.util;
+package cn.itmtx.ddd.ezlink.domain.util;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-@Component
-public class ConversionUtils {
+public enum ConversionUtils {
+
+    /**
+     * 单例
+     */
+    X;
 
     private static final String CHARS = "oNWxUYwrXdCOIj4ck6M8RbiQa3H91pSmZTAh70zquLnKvt2VyEGlBsPJgDe5Ff";
     private static final int SCALE = 62;
