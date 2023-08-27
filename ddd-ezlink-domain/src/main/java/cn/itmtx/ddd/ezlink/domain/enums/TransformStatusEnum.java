@@ -7,31 +7,31 @@ public enum TransformStatusEnum {
     /**
      * 转换成功
      */
-    TRANSFORM_SUCCESS(1),
+    TRANSFORM_SUCCESS((byte) 1),
 
     /**
      * 转换失败
      */
-    TRANSFORM_FAIL(2),
+    TRANSFORM_FAIL((byte) 2),
 
     /**
      * 重定向成功
      */
-    REDIRECTION_SUCCESS(3),
+    REDIRECTION_SUCCESS((byte) 3),
 
     /**
      * 重定向失败
      */
-    REDIRECTION_FAIL(4);
+    REDIRECTION_FAIL((byte) 4);
 
 
-    private final Integer value;
+    private final Byte value;
 
-    TransformStatusEnum(Integer value) {
+    TransformStatusEnum(Byte value) {
         this.value = value;
     }
 
-    public Integer getValue() {
+    public Byte getValue() {
         return value;
     }
 }

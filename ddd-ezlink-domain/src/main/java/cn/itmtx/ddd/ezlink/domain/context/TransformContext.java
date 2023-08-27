@@ -36,7 +36,7 @@ public class TransformContext {
     /**
      * 短链转换状态, {@link TransformStatusEnum}
      */
-    private Integer transformStatus;
+    private Byte transformStatus;
 
     /**
      * 存储 request header
@@ -90,11 +90,11 @@ public class TransformContext {
         this.compressionCode = compressionCode;
     }
 
-    public Integer getTransformStatus() {
+    public Byte getTransformStatus() {
         return transformStatus;
     }
 
-    public void setTransformStatus(Integer transformStatus) {
+    public void setTransformStatus(Byte transformStatus) {
         this.transformStatus = transformStatus;
     }
 
