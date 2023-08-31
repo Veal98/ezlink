@@ -1001,6 +1001,146 @@ public class VisitStatisticsExample {
             addCriterion("compression_code not between", value1, value2, "compressionCode");
             return (Criteria) this;
         }
+
+        public Criteria andShortUrlIsNull() {
+            addCriterion("short_url is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShortUrlIsNotNull() {
+            addCriterion("short_url is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andShortUrlEqualTo(String value) {
+            addCriterion("short_url =", value, "shortUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andShortUrlNotEqualTo(String value) {
+            addCriterion("short_url <>", value, "shortUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andShortUrlGreaterThan(String value) {
+            addCriterion("short_url >", value, "shortUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andShortUrlGreaterThanOrEqualTo(String value) {
+            addCriterion("short_url >=", value, "shortUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andShortUrlLessThan(String value) {
+            addCriterion("short_url <", value, "shortUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andShortUrlLessThanOrEqualTo(String value) {
+            addCriterion("short_url <=", value, "shortUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andShortUrlLike(String value) {
+            addCriterion("short_url like", value, "shortUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andShortUrlNotLike(String value) {
+            addCriterion("short_url not like", value, "shortUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andShortUrlIn(List<String> values) {
+            addCriterion("short_url in", values, "shortUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andShortUrlNotIn(List<String> values) {
+            addCriterion("short_url not in", values, "shortUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andShortUrlBetween(String value1, String value2) {
+            addCriterion("short_url between", value1, value2, "shortUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andShortUrlNotBetween(String value1, String value2) {
+            addCriterion("short_url not between", value1, value2, "shortUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andLongUrlIsNull() {
+            addCriterion("long_url is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLongUrlIsNotNull() {
+            addCriterion("long_url is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLongUrlEqualTo(String value) {
+            addCriterion("long_url =", value, "longUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andLongUrlNotEqualTo(String value) {
+            addCriterion("long_url <>", value, "longUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andLongUrlGreaterThan(String value) {
+            addCriterion("long_url >", value, "longUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andLongUrlGreaterThanOrEqualTo(String value) {
+            addCriterion("long_url >=", value, "longUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andLongUrlLessThan(String value) {
+            addCriterion("long_url <", value, "longUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andLongUrlLessThanOrEqualTo(String value) {
+            addCriterion("long_url <=", value, "longUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andLongUrlLike(String value) {
+            addCriterion("long_url like", value, "longUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andLongUrlNotLike(String value) {
+            addCriterion("long_url not like", value, "longUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andLongUrlIn(List<String> values) {
+            addCriterion("long_url in", values, "longUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andLongUrlNotIn(List<String> values) {
+            addCriterion("long_url not in", values, "longUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andLongUrlBetween(String value1, String value2) {
+            addCriterion("long_url between", value1, value2, "longUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andLongUrlNotBetween(String value1, String value2) {
+            addCriterion("long_url not between", value1, value2, "longUrl");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

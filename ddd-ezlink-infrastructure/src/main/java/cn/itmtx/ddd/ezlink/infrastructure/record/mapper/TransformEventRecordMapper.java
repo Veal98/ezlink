@@ -1,7 +1,10 @@
 package cn.itmtx.ddd.ezlink.infrastructure.record.mapper;
 
+import cn.itmtx.ddd.ezlink.domain.VisitStatisticsDO;
 import cn.itmtx.ddd.ezlink.infrastructure.record.po.TransformEventRecord;
 import cn.itmtx.ddd.ezlink.infrastructure.record.po.TransformEventRecordExample;
+
+import java.time.OffsetDateTime;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -25,4 +28,6 @@ public interface TransformEventRecordMapper {
     int updateByPrimaryKeySelective(TransformEventRecord record);
 
     int updateByPrimaryKey(TransformEventRecord record);
+
+    List<VisitStatisticsDO> selectVisitStatisticsDuration(@Param("start") OffsetDateTime start, @Param("end") OffsetDateTime end);
 }

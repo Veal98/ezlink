@@ -5,7 +5,7 @@ import cn.itmtx.ddd.ezlink.client.dto.data.UrlMapDTO;
 import cn.itmtx.ddd.ezlink.component.keygen.SequenceGenerator;
 import cn.itmtx.ddd.ezlink.component.dl.lock.DistributedLockFactory;
 import cn.itmtx.ddd.ezlink.domain.CompressionCodeDO;
-import cn.itmtx.ddd.ezlink.domain.CompressionCodeStatus;
+import cn.itmtx.ddd.ezlink.domain.enums.CompressionCodeStatusEnum;
 import cn.itmtx.ddd.ezlink.domain.DomainConfDO;
 import cn.itmtx.ddd.ezlink.domain.UrlMapDO;
 import cn.itmtx.ddd.ezlink.domain.assembler.UrlMapDOAssembler;
@@ -90,7 +90,7 @@ public class UrlMapDomain {
             urlMapDO.setShortUrl(shortUrl);
 
             // 插入表 url_map + 更新表 compression_code
-            compressionCodeDO.setCodeStatus(CompressionCodeStatus.USED.getValue());
+            compressionCodeDO.setCodeStatus(CompressionCodeStatusEnum.USED.getValue());
             this.saveUrlMapAndUpdateCompressCode(urlMapDO, compressionCodeDO);
 
             return urlMapDOAssembler.toUrlMapDTO(urlMapDO);

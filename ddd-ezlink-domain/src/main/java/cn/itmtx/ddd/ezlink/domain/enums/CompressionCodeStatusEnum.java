@@ -1,9 +1,9 @@
-package cn.itmtx.ddd.ezlink.domain;
+package cn.itmtx.ddd.ezlink.domain.enums;
 
 /**
  * 压缩码状态
  */
-public enum CompressionCodeStatus {
+public enum CompressionCodeStatusEnum {
 
     /**
      * 可用
@@ -22,7 +22,7 @@ public enum CompressionCodeStatus {
 
     private final Byte value;
 
-    CompressionCodeStatus(Byte value) {
+    CompressionCodeStatusEnum(Byte value) {
         this.value = value;
     }
 

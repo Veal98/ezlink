@@ -1,21 +1,13 @@
-package cn.itmtx.ddd.ezlink.infrastructure.record.po;
+package cn.itmtx.ddd.ezlink.domain;
 
 import java.util.Date;
 
-public class VisitStatistics {
+public class VisitStatisticsDO {
     private Long id;
 
     private Date createTime;
 
     private Date editTime;
-
-    private String creator;
-
-    private String editor;
-
-    private Byte deleted;
-
-    private Long version;
 
     private Date statisticsDate;
 
@@ -57,38 +49,6 @@ public class VisitStatistics {
 
     public void setEditTime(Date editTime) {
         this.editTime = editTime;
-    }
-
-    public String getCreator() {
-        return creator;
-    }
-
-    public void setCreator(String creator) {
-        this.creator = creator == null ? null : creator.trim();
-    }
-
-    public String getEditor() {
-        return editor;
-    }
-
-    public void setEditor(String editor) {
-        this.editor = editor == null ? null : editor.trim();
-    }
-
-    public Byte getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Byte deleted) {
-        this.deleted = deleted;
-    }
-
-    public Long getVersion() {
-        return version;
-    }
-
-    public void setVersion(Long version) {
-        this.version = version;
     }
 
     public Date getStatisticsDate() {

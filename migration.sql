@@ -68,6 +68,8 @@ CREATE TABLE `visit_statistics`
     `effective_redirection_count`   BIGINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '有效跳转数',
     `ineffective_redirection_count` BIGINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '无效跳转数',
     `compression_code`              VARCHAR(16)     NOT NULL COMMENT '压缩码',
+    `short_url`                     VARCHAR(100)    NOT NULL COMMENT '短链URL',
+    `long_url`                      VARCHAR(768)    NOT NULL COMMENT '长链URL',
     UNIQUE uniq_date_code (`statistics_date`, `compression_code`)
 ) COMMENT '短链访问数据统计';
 

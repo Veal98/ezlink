@@ -16,6 +16,8 @@
     <result column="effective_redirection_count" jdbcType="BIGINT" property="effectiveRedirectionCount" />
     <result column="ineffective_redirection_count" jdbcType="BIGINT" property="ineffectiveRedirectionCount" />
     <result column="compression_code" jdbcType="VARCHAR" property="compressionCode" />
+    <result column="short_url" jdbcType="VARCHAR" property="shortUrl" />
+    <result column="long_url" jdbcType="VARCHAR" property="longUrl" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -76,8 +78,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, create_time, edit_time, creator, editor, deleted, version, statistics_date, pv_count, 
-    uv_count, ip_count, effective_redirection_count, ineffective_redirection_count, compression_code
+    id, create_time, edit_time, creator, editor, deleted, version, statistics_date, pv_count,
+    uv_count, ip_count, effective_redirection_count, ineffective_redirection_count, compression_code,
+    short_url, long_url
   </sql>
   <select id="selectByExample" parameterType="cn.itmtx.ddd.ezlink.infrastructure.record.po.VisitStatisticsExample" resultMap="BaseResultMap">
     select
@@ -95,7 +98,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from visit_statistics
     where id = #{id,jdbcType=BIGINT}
@@ -111,18 +114,18 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.itmtx.ddd.ezlink.infrastructure.record.po.VisitStatistics">
-    insert into visit_statistics (id, create_time, edit_time, 
-      creator, editor, deleted, 
-      version, statistics_date, pv_count, 
-      uv_count, ip_count, effective_redirection_count, 
-      ineffective_redirection_count, compression_code
-      )
-    values (#{id,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{editTime,jdbcType=TIMESTAMP}, 
-      #{creator,jdbcType=VARCHAR}, #{editor,jdbcType=VARCHAR}, #{deleted,jdbcType=TINYINT}, 
-      #{version,jdbcType=BIGINT}, #{statisticsDate,jdbcType=DATE}, #{pvCount,jdbcType=BIGINT}, 
-      #{uvCount,jdbcType=BIGINT}, #{ipCount,jdbcType=BIGINT}, #{effectiveRedirectionCount,jdbcType=BIGINT}, 
-      #{ineffectiveRedirectionCount,jdbcType=BIGINT}, #{compressionCode,jdbcType=VARCHAR}
-      )
+    insert into visit_statistics (id, create_time, edit_time,
+      creator, editor, deleted,
+      version, statistics_date, pv_count,
+      uv_count, ip_count, effective_redirection_count,
+      ineffective_redirection_count, compression_code,
+      short_url, long_url)
+    values (#{id,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{editTime,jdbcType=TIMESTAMP},
+      #{creator,jdbcType=VARCHAR}, #{editor,jdbcType=VARCHAR}, #{deleted,jdbcType=TINYINT},
+      #{version,jdbcType=BIGINT}, #{statisticsDate,jdbcType=DATE}, #{pvCount,jdbcType=BIGINT},
+      #{uvCount,jdbcType=BIGINT}, #{ipCount,jdbcType=BIGINT}, #{effectiveRedirectionCount,jdbcType=BIGINT},
+      #{ineffectiveRedirectionCount,jdbcType=BIGINT}, #{compressionCode,jdbcType=VARCHAR},
+      #{shortUrl,jdbcType=VARCHAR}, #{longUrl,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.itmtx.ddd.ezlink.infrastructure.record.po.VisitStatistics">
     insert into visit_statistics
@@ -169,6 +172,12 @@
       <if test="compressionCode != null">
         compression_code,
       </if>
+      <if test="shortUrl != null">
+        short_url,
+      </if>
+      <if test="longUrl != null">
+        long_url,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -212,6 +221,12 @@
       </if>
       <if test="compressionCode != null">
         #{compressionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shortUrl != null">
+        #{shortUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="longUrl != null">
+        #{longUrl,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -260,6 +275,12 @@
       <if test="record.compressionCode != null">
         compression_code = #{record.compressionCode,jdbcType=VARCHAR},
       </if>
+      <if test="record.shortUrl != null">
+        short_url = #{record.shortUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.longUrl != null">
+        long_url = #{record.longUrl,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -280,7 +301,9 @@
       ip_count = #{record.ipCount,jdbcType=BIGINT},
       effective_redirection_count = #{record.effectiveRedirectionCount,jdbcType=BIGINT},
       ineffective_redirection_count = #{record.ineffectiveRedirectionCount,jdbcType=BIGINT},
-      compression_code = #{record.compressionCode,jdbcType=VARCHAR}
+      compression_code = #{record.compressionCode,jdbcType=VARCHAR},
+      short_url = #{record.shortUrl,jdbcType=VARCHAR},
+      long_url = #{record.longUrl,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -327,6 +350,12 @@
       <if test="compressionCode != null">
         compression_code = #{compressionCode,jdbcType=VARCHAR},
       </if>
+      <if test="shortUrl != null">
+        short_url = #{shortUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="longUrl != null">
+        long_url = #{longUrl,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -344,7 +373,9 @@
       ip_count = #{ipCount,jdbcType=BIGINT},
       effective_redirection_count = #{effectiveRedirectionCount,jdbcType=BIGINT},
       ineffective_redirection_count = #{ineffectiveRedirectionCount,jdbcType=BIGINT},
-      compression_code = #{compressionCode,jdbcType=VARCHAR}
+      compression_code = #{compressionCode,jdbcType=VARCHAR},
+      short_url = #{shortUrl,jdbcType=VARCHAR},
+      long_url = #{longUrl,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

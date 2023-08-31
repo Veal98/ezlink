@@ -1,4 +1,4 @@
-package cn.itmtx.ddd.ezlink.client;
+package cn.itmtx.ddd.ezlink.start;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
