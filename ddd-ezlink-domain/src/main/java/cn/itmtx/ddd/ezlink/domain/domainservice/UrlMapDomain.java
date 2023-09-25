@@ -5,6 +5,8 @@ import cn.itmtx.ddd.ezlink.client.dto.data.UrlMapDTO;
 import cn.itmtx.ddd.ezlink.component.keygen.SequenceGenerator;
 import cn.itmtx.ddd.ezlink.component.dl.lock.DistributedLockFactory;
 import cn.itmtx.ddd.ezlink.domain.CompressionCodeDO;
+import cn.itmtx.ddd.ezlink.domain.cache.UrlMapCacheManager;
+import cn.itmtx.ddd.ezlink.domain.constant.UrlValidatorConstant;
 import cn.itmtx.ddd.ezlink.domain.enums.CompressionCodeStatusEnum;
 import cn.itmtx.ddd.ezlink.domain.DomainConfDO;
 import cn.itmtx.ddd.ezlink.domain.UrlMapDO;
@@ -19,11 +21,13 @@ import cn.itmtx.ddd.ezlink.domain.gateway.UrlMapGateway;
 import cn.itmtx.ddd.ezlink.domain.util.ConversionUtils;
 import com.alibaba.cola.exception.BizException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.validator.routines.UrlValidator;
 import org.redisson.api.RLock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.util.Objects;
@@ -35,6 +39,9 @@ public class UrlMapDomain {
 
     @Resource(name = "${ezlink.generate.sequence-generator.type}SequenceGenerator")
     private SequenceGenerator sequenceGenerator;
+
+    private final UrlValidator urlValidator = new UrlValidator(new String[]{UrlValidatorConstant.HTTP_PROTOCOL,
+            UrlValidatorConstant.HTTPS_PROTOCOL});
 
     /**
      * 压缩码生成策略
@@ -66,6 +73,9 @@ public class UrlMapDomain {
     @Autowired
     private TransformFilterChainFactory transformFilterChainFactory;
 
+    @Autowired
+    private UrlMapCacheManager urlMapCacheManager;
+
     /**
      * 创建短链映射
      * @param urlMapAddCmd
@@ -77,11 +87,17 @@ public class UrlMapDomain {
             lock.lock(LockKeyEnum.CREATE_URL_MAP.getReleaseTime(), TimeUnit.MILLISECONDS);
             UrlMapDO urlMapDO = new UrlMapDO();
 
-            urlMapDO.setLongUrl(urlMapAddCmd.getLongUrl());
+            String longUrl = urlMapAddCmd.getLongUrl();
+            Assert.isTrue(urlValidator.isValid(longUrl), String.format("长链接 [%s] 非法", longUrl));
+            urlMapDO.setLongUrl(longUrl);
+
             urlMapDO.setDescription(urlMapAddCmd.getDescription());
 
             // 获取压缩码
             CompressionCodeDO compressionCodeDO = this.getAvailableCompressionCodeDO();
+            Assert.isTrue(Objects.nonNull(compressionCodeDO) &&
+                    CompressionCodeStatusEnum.AVAILABLE.getValue().equals(compressionCodeDO.getCodeStatus()), "compression code is not exits or is used");
+
             String compressionCode = compressionCodeDO.getCompressionCode();
             urlMapDO.setCompressionCode(compressionCode);
 
@@ -93,10 +109,11 @@ public class UrlMapDomain {
             compressionCodeDO.setCodeStatus(CompressionCodeStatusEnum.USED.getValue());
             this.saveUrlMapAndUpdateCompressCode(urlMapDO, compressionCodeDO);
 
+            // 刷新缓存
+            urlMapCacheManager.refreshUrlMapCache(urlMapDO);
+
+            // UrlMapDO -> UrlMapDTO
             return urlMapDOAssembler.toUrlMapDTO(urlMapDO);
-        } catch (Exception e) {
-            // 向上抛出，最外层有 @CatchAndLog 注解用来处理异常和打印日志
-            throw new BizException("createUrlMap failed!");
         } finally {
             lock.unlock();
         }

@@ -35,6 +35,7 @@
         <redisson.version>3.11.5</redisson.version>
         <ttl.version>2.12.0</ttl.version>
         <user.agent.utils.version>1.21</user.agent.utils.version>
+        <commons.validator.version>1.6</commons.validator.version>
     </properties>
 
     <dependencies>
@@ -171,6 +172,12 @@
                 <groupId>eu.bitwalker</groupId>
                 <artifactId>UserAgentUtils</artifactId>
                 <version>${user.agent.utils.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-validator</groupId>
+                <artifactId>commons-validator</artifactId>
+                <version>${commons.validator.version}</version>
             </dependency>
 
         </dependencies>

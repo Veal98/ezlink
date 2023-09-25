@@ -24,7 +24,7 @@ public class DispatchQryCmdExe {
         TransformContext context = generateTransformContext(compressionCode, exchange);
         // 处理短链转换
         urlMapDomain.processTransform(context);
-        // 执行重定向
+        // 执行重定向(flush用到的线程和内部逻辑处理的线程不是同一个线程,所有 redirectAction 要用 TTL 存)
         return Mono.fromRunnable(context.getRedirectAction());
     }
 
