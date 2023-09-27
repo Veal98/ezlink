@@ -1,7 +1,9 @@
 package cn.itmtx.ddd.ezlink.application.executor.query;
 
+import cn.itmtx.ddd.ezlink.client.dto.query.DisPatchQry;
 import cn.itmtx.ddd.ezlink.domain.context.TransformContext;
 import cn.itmtx.ddd.ezlink.domain.domainservice.UrlMapDomain;
+import com.alibaba.cola.dto.Command;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -14,14 +16,14 @@ import java.util.Objects;
 import java.util.Set;
 
 @Component
-public class DispatchQryCmdExe {
+public class DispatchQryExe extends Command {
 
     @Autowired
     private UrlMapDomain urlMapDomain;
 
-    public Mono<Void> execute(String compressionCode, ServerWebExchange exchange) {
+    public Mono<Void> execute(DisPatchQry dispatchQry) {
         // 填充 TransformContext
-        TransformContext context = generateTransformContext(compressionCode, exchange);
+        TransformContext context = generateTransformContext(dispatchQry.getCompressionCode(), dispatchQry.getExchange());
         // 处理短链转换
         urlMapDomain.processTransform(context);
         // 执行重定向(flush用到的线程和内部逻辑处理的线程不是同一个线程,所有 redirectAction 要用 TTL 存)

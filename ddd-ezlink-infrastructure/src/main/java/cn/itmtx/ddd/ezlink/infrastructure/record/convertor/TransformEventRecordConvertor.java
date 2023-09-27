@@ -1,22 +1,20 @@
-package cn.itmtx.ddd.ezlink.infrastructure.record.assembler;
+package cn.itmtx.ddd.ezlink.infrastructure.record.convertor;
 
-import cn.itmtx.ddd.ezlink.domain.CompressionCodeDO;
-import cn.itmtx.ddd.ezlink.domain.TransformEventRecordDO;
+import cn.itmtx.ddd.ezlink.domain.domainobject.TransformEventRecordDO;
 import cn.itmtx.ddd.ezlink.infrastructure.record.po.TransformEventRecord;
-import cn.itmtx.ddd.ezlink.infrastructure.transform.po.CompressionCode;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TransformEventRecordAssembler {
+public class TransformEventRecordConvertor {
 
-    public TransformEventRecord fromTransformEventRecordDO(TransformEventRecordDO transformEventRecordDO) {
+    public TransformEventRecord toPO(TransformEventRecordDO transformEventRecordDO) {
         TransformEventRecord transformEventRecord = new TransformEventRecord();
         BeanUtils.copyProperties(transformEventRecordDO, transformEventRecord);
         return transformEventRecord;
     }
 
-    public TransformEventRecordDO toTransformEventDO(TransformEventRecord transformEventRecord) {
+    public TransformEventRecordDO toDO(TransformEventRecord transformEventRecord) {
         TransformEventRecordDO transformEventRecordDO = new TransformEventRecordDO();
         BeanUtils.copyProperties(transformEventRecord, transformEventRecordDO);
         return transformEventRecordDO;

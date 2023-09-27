@@ -528,7 +528,7 @@
         where id = #{id,jdbcType=BIGINT}
     </update>
 
-    <select id="selectVisitStatisticsDuration" resultType="cn.itmtx.ddd.ezlink.domain.VisitStatisticsDO">
+    <select id="selectVisitStatisticsDuration" resultType="cn.itmtx.ddd.ezlink.domain.domainobject.VisitStatisticsDO">
         SELECT COUNT(1)                             AS                `pvCount`,
                IFNULL(COUNT(DISTINCT unique_identity), 0)             `uvCount`,
                IFNULL(COUNT(DISTINCT client_ip), 0)                   `ipCount`,

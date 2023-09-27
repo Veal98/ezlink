@@ -1,8 +1,7 @@
 package cn.itmtx.ddd.ezlink.domain.gateway;
 
-import cn.itmtx.ddd.ezlink.domain.CompressionCodeDO;
-import cn.itmtx.ddd.ezlink.domain.TransformEventRecordDO;
-import cn.itmtx.ddd.ezlink.domain.VisitStatisticsDO;
+import cn.itmtx.ddd.ezlink.domain.domainobject.TransformEventRecordDO;
+import cn.itmtx.ddd.ezlink.domain.domainobject.VisitStatisticsDO;
 
 
 import java.time.OffsetDateTime;

@@ -1,6 +1,6 @@
 package cn.itmtx.ddd.ezlink.domain.filter.custom;
 
-import cn.itmtx.ddd.ezlink.domain.TransformEventRecordDO;
+import cn.itmtx.ddd.ezlink.domain.domainobject.TransformEventRecordDO;
 import cn.itmtx.ddd.ezlink.domain.constant.KafkaConstant;
 import cn.itmtx.ddd.ezlink.domain.context.TransformContext;
 import cn.itmtx.ddd.ezlink.domain.filter.TransformFilter;

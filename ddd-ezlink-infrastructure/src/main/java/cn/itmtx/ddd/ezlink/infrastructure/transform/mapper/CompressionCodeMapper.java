@@ -1,6 +1,6 @@
 package cn.itmtx.ddd.ezlink.infrastructure.transform.mapper;
 
-import cn.itmtx.ddd.ezlink.domain.CompressionCodeDO;
+import cn.itmtx.ddd.ezlink.domain.domainobject.CompressionCodeDO;
 import cn.itmtx.ddd.ezlink.infrastructure.transform.po.CompressionCode;
 import cn.itmtx.ddd.ezlink.infrastructure.transform.po.CompressionCodeExample;
 import java.util.List;

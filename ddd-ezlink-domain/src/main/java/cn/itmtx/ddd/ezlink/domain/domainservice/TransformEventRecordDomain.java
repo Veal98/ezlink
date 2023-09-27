@@ -1,6 +1,6 @@
 package cn.itmtx.ddd.ezlink.domain.domainservice;
 
-import cn.itmtx.ddd.ezlink.domain.TransformEventRecordDO;
+import cn.itmtx.ddd.ezlink.domain.domainobject.TransformEventRecordDO;
 import cn.itmtx.ddd.ezlink.domain.gateway.TransformEventRecordGateway;
 import cn.itmtx.ddd.ezlink.domain.util.UserAgentUtils;
 import eu.bitwalker.useragentutils.*;

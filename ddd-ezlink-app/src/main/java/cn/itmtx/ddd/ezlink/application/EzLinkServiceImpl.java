@@ -1,16 +1,15 @@
 package cn.itmtx.ddd.ezlink.application;
 
-import cn.itmtx.ddd.ezlink.application.executor.UrlMapAddCmdExe;
-import cn.itmtx.ddd.ezlink.application.executor.query.DispatchQryCmdExe;
+import cn.itmtx.ddd.ezlink.application.executor.command.UrlMapAddCmdExe;
+import cn.itmtx.ddd.ezlink.application.executor.query.DispatchQryExe;
 import cn.itmtx.ddd.ezlink.client.api.EzLinkService;
-import cn.itmtx.ddd.ezlink.client.dto.UrlMapAddCmd;
+import cn.itmtx.ddd.ezlink.client.dto.command.UrlMapAddCmd;
 import cn.itmtx.ddd.ezlink.client.dto.data.UrlMapDTO;
+import cn.itmtx.ddd.ezlink.client.dto.query.DisPatchQry;
 import com.alibaba.cola.catchlog.CatchAndLog;
 import com.alibaba.cola.dto.SingleResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -21,15 +20,15 @@ public class EzLinkServiceImpl implements EzLinkService {
     private UrlMapAddCmdExe urlMapAddCmdExe;
 
     @Autowired
-    private DispatchQryCmdExe dispatchQryCmdExe;
+    private DispatchQryExe dispatchQryExe;
+
+    @Override
+    public Mono<Void> dispatch(DisPatchQry dispatchQry) {
+        return dispatchQryExe.execute(dispatchQry);
+    }
 
     @Override
     public SingleResponse<UrlMapDTO> createUrlMap(UrlMapAddCmd urlMapAddCmd) {
         return urlMapAddCmdExe.execute(urlMapAddCmd);
-    }
-
-    @Override
-    public Mono<Void> dispatch(String compressionCode, ServerWebExchange exchange) {
-        return dispatchQryCmdExe.execute(compressionCode, exchange);
     }
 }

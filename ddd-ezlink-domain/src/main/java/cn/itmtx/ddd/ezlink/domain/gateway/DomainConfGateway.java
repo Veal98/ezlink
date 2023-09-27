@@ -1,6 +1,6 @@
 package cn.itmtx.ddd.ezlink.domain.gateway;
 
-import cn.itmtx.ddd.ezlink.domain.DomainConfDO;
+import cn.itmtx.ddd.ezlink.domain.domainobject.DomainConfDO;
 
 public interface DomainConfGateway {
 

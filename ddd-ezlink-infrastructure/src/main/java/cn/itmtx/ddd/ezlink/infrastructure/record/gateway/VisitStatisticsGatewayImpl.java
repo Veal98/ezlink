@@ -1,17 +1,15 @@
-package cn.itmtx.ddd.ezlink.infrastructure.record;
+package cn.itmtx.ddd.ezlink.infrastructure.record.gateway;
 
-import cn.itmtx.ddd.ezlink.domain.VisitStatisticsDO;
+import cn.itmtx.ddd.ezlink.domain.domainobject.VisitStatisticsDO;
 import cn.itmtx.ddd.ezlink.domain.gateway.VisitStatisticsGateway;
-import cn.itmtx.ddd.ezlink.infrastructure.record.assembler.VisitStatisticsAssembler;
+import cn.itmtx.ddd.ezlink.infrastructure.record.convertor.VisitStatisticsConvertor;
 import cn.itmtx.ddd.ezlink.infrastructure.record.mapper.VisitStatisticsMapper;
 import cn.itmtx.ddd.ezlink.infrastructure.record.po.VisitStatistics;
 import cn.itmtx.ddd.ezlink.infrastructure.record.po.VisitStatisticsExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +20,7 @@ public class VisitStatisticsGatewayImpl implements VisitStatisticsGateway {
     private VisitStatisticsMapper visitStatisticsMapper;
 
     @Autowired
-    private VisitStatisticsAssembler visitStatisticsAssembler;
+    private VisitStatisticsConvertor visitStatisticsConvertor;
 
     @Override
     public VisitStatisticsDO selectByUniqueKey(Date statisticsDate, String compressionCode, String shortUrl, String longUrl) {
@@ -38,16 +36,16 @@ public class VisitStatisticsGatewayImpl implements VisitStatisticsGateway {
             return null;
         }
 
-        return visitStatisticsAssembler.toVisitStatisticsDO(visitStatistics.get(0));
+        return visitStatisticsConvertor.toDO(visitStatistics.get(0));
     }
 
     @Override
     public int insertVisitStatisticsDO(VisitStatisticsDO visitStatisticsDO) {
-        return visitStatisticsMapper.insertSelective(visitStatisticsAssembler.fromVisitStatisticsDO(visitStatisticsDO));
+        return visitStatisticsMapper.insertSelective(visitStatisticsConvertor.toPO(visitStatisticsDO));
     }
 
     @Override
     public int updateByPrimaryKeySelective(VisitStatisticsDO visitStatisticsDO) {
-        return visitStatisticsMapper.updateByPrimaryKeySelective(visitStatisticsAssembler.fromVisitStatisticsDO(visitStatisticsDO));
+        return visitStatisticsMapper.updateByPrimaryKeySelective(visitStatisticsConvertor.toPO(visitStatisticsDO));
     }
 }

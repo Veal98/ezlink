@@ -1,6 +1,6 @@
-package cn.itmtx.ddd.ezlink.application.consumer;
+package cn.itmtx.ddd.ezlink.application.mq;
 
-import cn.itmtx.ddd.ezlink.domain.TransformEventRecordDO;
+import cn.itmtx.ddd.ezlink.domain.domainobject.TransformEventRecordDO;
 import cn.itmtx.ddd.ezlink.domain.constant.KafkaConstant;
 import cn.itmtx.ddd.ezlink.domain.domainservice.TransformEventRecordDomain;
 import com.google.gson.Gson;

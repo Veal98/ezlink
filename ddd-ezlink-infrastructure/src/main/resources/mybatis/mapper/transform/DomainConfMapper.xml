@@ -76,7 +76,7 @@
     deleted, version
   </sql>
 
-  <resultMap id="DOResultMap" type="cn.itmtx.ddd.ezlink.domain.DomainConfDO">
+  <resultMap id="DOResultMap" type="cn.itmtx.ddd.ezlink.domain.domainobject.DomainConfDO">
     <result column="protocol" jdbcType="VARCHAR" property="protocol" />
   </resultMap>
   <sql id="DO_Column_List">

@@ -1,6 +1,6 @@
-package cn.itmtx.ddd.ezlink.application.executor;
+package cn.itmtx.ddd.ezlink.application.executor.command;
 
-import cn.itmtx.ddd.ezlink.client.dto.UrlMapAddCmd;
+import cn.itmtx.ddd.ezlink.client.dto.command.UrlMapAddCmd;
 import cn.itmtx.ddd.ezlink.client.dto.data.UrlMapDTO;
 import cn.itmtx.ddd.ezlink.domain.domainservice.UrlMapDomain;
 import com.alibaba.cola.dto.SingleResponse;

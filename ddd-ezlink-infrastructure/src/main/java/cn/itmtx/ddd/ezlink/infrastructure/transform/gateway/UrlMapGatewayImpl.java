@@ -1,6 +1,6 @@
-package cn.itmtx.ddd.ezlink.infrastructure.transform;
+package cn.itmtx.ddd.ezlink.infrastructure.transform.gateway;
 
-import cn.itmtx.ddd.ezlink.domain.UrlMapDO;
+import cn.itmtx.ddd.ezlink.domain.domainobject.UrlMapDO;
 import cn.itmtx.ddd.ezlink.domain.gateway.UrlMapGateway;
 import cn.itmtx.ddd.ezlink.infrastructure.transform.assembler.UrlMapAssembler;
 import cn.itmtx.ddd.ezlink.infrastructure.transform.mapper.UrlMapMapper;
@@ -9,7 +9,6 @@ import cn.itmtx.ddd.ezlink.infrastructure.transform.po.UrlMapExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Optional;
 
 @Component

@@ -1,13 +1,14 @@
 package cn.itmtx.ddd.ezlink.domain.cache;
 
-import cn.itmtx.ddd.ezlink.client.dto.data.UrlMapDTO;
-import cn.itmtx.ddd.ezlink.domain.UrlMapDO;
+import cn.itmtx.ddd.ezlink.domain.domainobject.UrlMapDO;
 import cn.itmtx.ddd.ezlink.domain.enums.CacheKeyEnum;
 import cn.itmtx.ddd.ezlink.domain.gateway.UrlMapGateway;
+import com.google.common.hash.BloomFilter;
 import com.google.gson.Gson;
-import jodd.cache.Cache;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
@@ -15,10 +16,15 @@ import org.springframework.stereotype.Component;
 import java.util.Objects;
 
 @Component
+@Slf4j
 public class UrlMapCacheManager {
 
     @Autowired
     private UrlMapGateway urlMapGateway;
+
+    @Autowired
+    @Qualifier("compressionCodeBloom")
+    private BloomFilter<String> compressionCodeBloom;
 
     private final StringRedisTemplate stringRedisTemplate;
 
@@ -46,6 +52,14 @@ public class UrlMapCacheManager {
      * @return
      */
     public UrlMapDO loadUrlMapFromCache(String compressionCode) {
+        // BloomFilter, 防止缓存穿透
+        if (!compressionCodeBloom.mightContain(compressionCode)) {
+            log.info("The compressionCode [{}] not in BloomFilter.", compressionCode);
+            return null;
+        }
+
+
+
         HashOperations<String, String, String> hashOperations = stringRedisTemplate.opsForHash();
         String hv = hashOperations.get(CacheKeyEnum.ACCESS_CODE_HASH.getKey(), compressionCode);
         UrlMapDO urlMapDO = StringUtils.isNotEmpty(hv) ? new Gson().fromJson(hv, UrlMapDO.class) : loadUrlMapFromDb(compressionCode);
@@ -57,7 +71,7 @@ public class UrlMapCacheManager {
         // 根据压缩码查找数据库
         UrlMapDO urlMapDO = urlMapGateway.getUrlMapDOByCompressionCode(compressionCode);
         if (Objects.isNull(urlMapDO)) {
-            // TODO 这里需要防止缓存击穿
+            return null;
         }
 
         // 刷新缓存

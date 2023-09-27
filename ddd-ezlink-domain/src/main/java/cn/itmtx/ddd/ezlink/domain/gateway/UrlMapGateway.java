@@ -1,6 +1,6 @@
 package cn.itmtx.ddd.ezlink.domain.gateway;
 
-import cn.itmtx.ddd.ezlink.domain.UrlMapDO;
+import cn.itmtx.ddd.ezlink.domain.domainobject.UrlMapDO;
 
 public interface UrlMapGateway {
 

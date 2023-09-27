@@ -1,6 +1,6 @@
 package cn.itmtx.ddd.ezlink.infrastructure.transform.assembler;
 
-import cn.itmtx.ddd.ezlink.domain.DomainConfDO;
+import cn.itmtx.ddd.ezlink.domain.domainobject.DomainConfDO;
 import cn.itmtx.ddd.ezlink.infrastructure.transform.po.DomainConf;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package cn.itmtx.ddd.ezlink.domain;
+package cn.itmtx.ddd.ezlink.domain.domainobject;
 
 public class DomainConfDO {
     private String protocol;

@@ -11,6 +11,7 @@
     <artifactId>ddd-ezlink-client</artifactId>
     <packaging>jar</packaging>
     <name>ddd-ezlink-client</name>
+    <description>用来定义契约</description>
 
     <dependencies>
         <dependency>

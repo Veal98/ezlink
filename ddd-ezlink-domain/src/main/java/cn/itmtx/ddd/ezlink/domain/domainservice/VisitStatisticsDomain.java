@@ -1,6 +1,6 @@
 package cn.itmtx.ddd.ezlink.domain.domainservice;
 
-import cn.itmtx.ddd.ezlink.domain.VisitStatisticsDO;
+import cn.itmtx.ddd.ezlink.domain.domainobject.VisitStatisticsDO;
 import cn.itmtx.ddd.ezlink.domain.gateway.TransformEventRecordGateway;
 import cn.itmtx.ddd.ezlink.domain.gateway.VisitStatisticsGateway;
 import org.springframework.beans.factory.annotation.Autowired;

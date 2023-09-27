@@ -1,12 +1,11 @@
-package cn.itmtx.ddd.ezlink.infrastructure.record;
+package cn.itmtx.ddd.ezlink.infrastructure.record.gateway;
 
-import cn.itmtx.ddd.ezlink.domain.TransformEventRecordDO;
-import cn.itmtx.ddd.ezlink.domain.VisitStatisticsDO;
+import cn.itmtx.ddd.ezlink.domain.domainobject.TransformEventRecordDO;
+import cn.itmtx.ddd.ezlink.domain.domainobject.VisitStatisticsDO;
 import cn.itmtx.ddd.ezlink.domain.gateway.TransformEventRecordGateway;
-import cn.itmtx.ddd.ezlink.infrastructure.record.assembler.TransformEventRecordAssembler;
+import cn.itmtx.ddd.ezlink.infrastructure.record.convertor.TransformEventRecordConvertor;
 import cn.itmtx.ddd.ezlink.infrastructure.record.mapper.TransformEventRecordMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.time.OffsetDateTime;
@@ -19,11 +18,11 @@ public class TransformEventRecordGatewayImpl implements TransformEventRecordGate
     private TransformEventRecordMapper transformEventRecordMapper;
 
     @Autowired
-    private TransformEventRecordAssembler transformEventRecordAssembler;
+    private TransformEventRecordConvertor transformEventRecordConvertor;
 
     @Override
     public void insertTransformEventRecordDO(TransformEventRecordDO transformEventRecordDO) {
-        transformEventRecordMapper.insertSelective(transformEventRecordAssembler.fromTransformEventRecordDO(transformEventRecordDO));
+        transformEventRecordMapper.insertSelective(transformEventRecordConvertor.toPO(transformEventRecordDO));
     }
 
     @Override

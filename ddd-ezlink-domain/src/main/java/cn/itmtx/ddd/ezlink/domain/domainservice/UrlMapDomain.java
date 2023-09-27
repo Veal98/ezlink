@@ -1,15 +1,15 @@
 package cn.itmtx.ddd.ezlink.domain.domainservice;
 
-import cn.itmtx.ddd.ezlink.client.dto.UrlMapAddCmd;
+import cn.itmtx.ddd.ezlink.client.dto.command.UrlMapAddCmd;
 import cn.itmtx.ddd.ezlink.client.dto.data.UrlMapDTO;
 import cn.itmtx.ddd.ezlink.component.keygen.SequenceGenerator;
 import cn.itmtx.ddd.ezlink.component.dl.lock.DistributedLockFactory;
-import cn.itmtx.ddd.ezlink.domain.CompressionCodeDO;
+import cn.itmtx.ddd.ezlink.domain.domainobject.CompressionCodeDO;
 import cn.itmtx.ddd.ezlink.domain.cache.UrlMapCacheManager;
 import cn.itmtx.ddd.ezlink.domain.constant.UrlValidatorConstant;
 import cn.itmtx.ddd.ezlink.domain.enums.CompressionCodeStatusEnum;
-import cn.itmtx.ddd.ezlink.domain.DomainConfDO;
-import cn.itmtx.ddd.ezlink.domain.UrlMapDO;
+import cn.itmtx.ddd.ezlink.domain.domainobject.DomainConfDO;
+import cn.itmtx.ddd.ezlink.domain.domainobject.UrlMapDO;
 import cn.itmtx.ddd.ezlink.domain.assembler.UrlMapDOAssembler;
 import cn.itmtx.ddd.ezlink.domain.context.TransformContext;
 import cn.itmtx.ddd.ezlink.domain.enums.LockKeyEnum;
@@ -19,7 +19,6 @@ import cn.itmtx.ddd.ezlink.domain.gateway.CompressionCodeGateway;
 import cn.itmtx.ddd.ezlink.domain.gateway.DomainConfGateway;
 import cn.itmtx.ddd.ezlink.domain.gateway.UrlMapGateway;
 import cn.itmtx.ddd.ezlink.domain.util.ConversionUtils;
-import com.alibaba.cola.exception.BizException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.validator.routines.UrlValidator;
 import org.redisson.api.RLock;
@@ -113,7 +112,7 @@ public class UrlMapDomain {
             urlMapCacheManager.refreshUrlMapCache(urlMapDO);
 
             // UrlMapDO -> UrlMapDTO
-            return urlMapDOAssembler.toUrlMapDTO(urlMapDO);
+            return urlMapDOAssembler.toDTO(urlMapDO);
         } finally {
             lock.unlock();
         }

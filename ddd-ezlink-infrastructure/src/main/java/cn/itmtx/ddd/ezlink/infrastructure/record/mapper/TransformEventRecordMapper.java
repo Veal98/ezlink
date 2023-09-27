@@ -1,6 +1,6 @@
 package cn.itmtx.ddd.ezlink.infrastructure.record.mapper;
 
-import cn.itmtx.ddd.ezlink.domain.VisitStatisticsDO;
+import cn.itmtx.ddd.ezlink.domain.domainobject.VisitStatisticsDO;
 import cn.itmtx.ddd.ezlink.infrastructure.record.po.TransformEventRecord;
 import cn.itmtx.ddd.ezlink.infrastructure.record.po.TransformEventRecordExample;
 

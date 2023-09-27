@@ -1,6 +1,8 @@
-package cn.itmtx.ddd.ezlink.client.dto;
+package cn.itmtx.ddd.ezlink.client.dto.command;
 
-public class UrlMapAddCmd {
+import com.alibaba.cola.dto.Command;
+
+public class UrlMapAddCmd extends Command {
 
     private String longUrl;
     private String description;

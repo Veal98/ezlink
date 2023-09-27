@@ -1,12 +1,11 @@
 package cn.itmtx.ddd.ezlink.domain.filter.custom;
 
-import cn.itmtx.ddd.ezlink.domain.UrlMapDO;
+import cn.itmtx.ddd.ezlink.domain.domainobject.UrlMapDO;
 import cn.itmtx.ddd.ezlink.domain.cache.UrlMapCacheManager;
 import cn.itmtx.ddd.ezlink.domain.context.TransformContext;
 import cn.itmtx.ddd.ezlink.domain.enums.TransformStatusEnum;
 import cn.itmtx.ddd.ezlink.domain.filter.TransformFilter;
 import cn.itmtx.ddd.ezlink.domain.filter.TransformFilterChain;
-import cn.itmtx.ddd.ezlink.domain.gateway.UrlMapGateway;
 import com.alibaba.cola.exception.BizException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

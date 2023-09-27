@@ -1,6 +1,6 @@
 package cn.itmtx.ddd.ezlink.infrastructure.transform.assembler;
 
-import cn.itmtx.ddd.ezlink.domain.UrlMapDO;
+import cn.itmtx.ddd.ezlink.domain.domainobject.UrlMapDO;
 import cn.itmtx.ddd.ezlink.infrastructure.transform.po.UrlMap;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
