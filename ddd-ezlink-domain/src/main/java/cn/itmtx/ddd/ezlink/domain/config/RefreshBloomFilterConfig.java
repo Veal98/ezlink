@@ -1,4 +1,4 @@
-package cn.itmtx.ddd.ezlink.adapter.web.job;
+package cn.itmtx.ddd.ezlink.domain.config;
 
 import cn.itmtx.ddd.ezlink.domain.gateway.CompressionCodeGateway;
 import com.google.common.hash.BloomFilter;
@@ -7,14 +7,13 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
 @Slf4j
 @Configuration
-public class RefreshBloomFilterJob implements InitializingBean {
+public class RefreshBloomFilterConfig implements InitializingBean {
 
     @Autowired
     @Qualifier("compressionCodeBloom")
@@ -24,21 +23,19 @@ public class RefreshBloomFilterJob implements InitializingBean {
     private CompressionCodeGateway compressionCodeGateway;
 
     /**
-     * 启动项目时把所有已经使用过的 compressionCode 插入布隆过滤器
-     * 并每隔 24h 执行一次
+     * 启动项目时把所有 compressionCode 插入布隆过滤器
      * @throws Exception
      */
     @Override
-    @Scheduled(fixedRate = 1000 * 60 * 60 * 24)
     public void afterPropertiesSet() throws Exception {
-        List<String> allUsedCompressionCode = compressionCodeGateway.getAllUsedCompressionCode();
+        List<String> allUsedCompressionCode = compressionCodeGateway.selectAllCompressionCode();
         if (CollectionUtils.isEmpty(allUsedCompressionCode)) {
-            log.info("There are no used compressionCodes can be stored in bloomFilter.");
+            log.info("There are no compressionCodes can be stored in bloomFilter.");
             return ;
         }
 
         // 存到 BloomFilter
         allUsedCompressionCode.forEach(compressionCode -> compressionCodeBloom.put(compressionCode));
-        log.info("There are [{}] used compressionCodes has stored in bloomFilter.", allUsedCompressionCode.size());
+        log.info("There are [{}] compressionCodes has stored in bloomFilter.", allUsedCompressionCode.size());
     }
 }

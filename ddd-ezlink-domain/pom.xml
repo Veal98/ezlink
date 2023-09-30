@@ -21,10 +21,6 @@
             <groupId>cn.itmtx.ddd.ezlink</groupId>
             <artifactId>ddd-ezlink-component-dl</artifactId>
         </dependency>
-        <dependency>
-            <groupId>cn.itmtx.ddd.ezlink</groupId>
-            <artifactId>ddd-ezlink-component-bloomfilter</artifactId>
-        </dependency>
 
         <!-- COLA components -->
         <dependency>

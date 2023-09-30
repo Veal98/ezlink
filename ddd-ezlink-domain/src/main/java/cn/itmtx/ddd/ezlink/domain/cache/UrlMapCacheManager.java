@@ -43,10 +43,6 @@ public class UrlMapCacheManager {
 
         HashOperations<String, String, String> hashOperations = stringRedisTemplate.opsForHash();
         hashOperations.put(CacheKeyEnum.ACCESS_CODE_HASH.getKey(), urlMapDO.getCompressionCode(), new Gson().toJson(urlMapDO));
-
-        // 存到 BloomFilter
-        compressionCodeBloom.put(urlMapDO.getCompressionCode());
-        log.info("The compressionCodes [{}] has stored in bloomFilter.", urlMapDO.getCompressionCode());
     }
 
     /**

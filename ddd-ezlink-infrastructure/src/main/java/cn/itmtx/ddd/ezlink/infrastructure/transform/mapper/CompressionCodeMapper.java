@@ -32,4 +32,10 @@ public interface CompressionCodeMapper {
      * @return
      */
     CompressionCodeDO getLatestAvailableCompressionCodeDO();
+
+    /**
+     * 获取所有 compressionCode
+     * @return
+     */
+    List<String> selectAllCompressionCode();
 }

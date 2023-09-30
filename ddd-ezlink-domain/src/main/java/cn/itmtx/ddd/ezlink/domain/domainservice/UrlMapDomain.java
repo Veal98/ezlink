@@ -1,5 +1,6 @@
 package cn.itmtx.ddd.ezlink.domain.domainservice;
 
+import cn.itmtx.ddd.ezlink.component.keygen.SequenceAndCode;
 import cn.itmtx.ddd.ezlink.component.keygen.SequenceGenerator;
 import cn.itmtx.ddd.ezlink.component.dl.lock.DistributedLockFactory;
 import cn.itmtx.ddd.ezlink.domain.domainobject.CompressionCodeDO;
@@ -85,7 +86,7 @@ public class UrlMapDomain {
             Assert.isTrue(urlValidator.isValid(longUrl), String.format("长链接 [%s] 非法", longUrl));
 
             // 获取压缩码
-            CompressionCodeDO compressionCodeDO = this.getAvailableCompressionCodeDO();
+            CompressionCodeDO compressionCodeDO = this.getAvailableCompressionCodeDO(longUrl);
             Assert.isTrue(Objects.nonNull(compressionCodeDO) &&
                     CompressionCodeStatusEnum.AVAILABLE.getValue().equals(compressionCodeDO.getCodeStatus()), "compression code is not exits or is used");
 
@@ -103,7 +104,10 @@ public class UrlMapDomain {
             // 刷新缓存
             urlMapCacheManager.refreshUrlMapCache(urlMapDO);
         } finally {
-            lock.unlock();
+            // 判断要解锁的key是否被当前线程持有,防止出现 not locked by current thread 异常
+            if (lock.isLocked() && lock.isHeldByCurrentThread()) {
+                lock.unlock();
+            }
         }
     }
 
@@ -145,17 +149,16 @@ public class UrlMapDomain {
 
     /**
      * 批量生成 62 进制压缩码
+     * @param longUrl
      */
-    private void generateBatchCompressionCode() {
+    private void generateBatchCompressionCode(String longUrl) {
         for (int i = 0; i < compressionCodeGenerateBatchNum; i ++) {
             CompressionCodeDO compressionCodeDO = new CompressionCodeDO();
             compressionCodeDO.setStrategy(strategy);
-            // 生成 10 进制压缩码
-            long sequence = sequenceGenerator.generate();
-            compressionCodeDO.setSequenceValue(String.valueOf(sequence));
-            // 10 进制转 62 进制
-            String code = ConversionUtils.X.encode62(sequence);
-            compressionCodeDO.setCompressionCode(code);
+            // 生成 62 进制压缩码
+            SequenceAndCode sequenceAndCode = sequenceGenerator.generate(longUrl);
+            compressionCodeDO.setSequenceValue(sequenceAndCode.getSequence());
+            compressionCodeDO.setCompressionCode(sequenceAndCode.getCompressionCode());
 
             // 存入数据库表 `compression_code`
             compressionCodeGateway.insertCompressionCodeDO(compressionCodeDO);
@@ -166,13 +169,13 @@ public class UrlMapDomain {
      * 获取一个可用的压缩码
      * @return
      */
-    private CompressionCodeDO getAvailableCompressionCodeDO() {
+    private CompressionCodeDO getAvailableCompressionCodeDO(String longUrl) {
         CompressionCodeDO compressionCodeDO = compressionCodeGateway.getLatestAvailableCompressionCodeDO();
         if (Objects.nonNull(compressionCodeDO)) {
             return compressionCodeDO;
         }
 
-        generateBatchCompressionCode();
+        generateBatchCompressionCode(longUrl);
         return compressionCodeGateway.getLatestAvailableCompressionCodeDO();
     }
 

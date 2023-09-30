@@ -14,12 +14,11 @@ public interface CompressionCodeGateway {
      */
     CompressionCodeDO getLatestAvailableCompressionCodeDO();
 
+    int updateByPrimaryKeySelective(CompressionCodeDO compressionCodeDO);
+
     /**
-     * 获取所有已经使用的 compressionCode
-     * TODO 数据量大了后这里要做分页
+     * 获取所有 compressionCode
      * @return
      */
-    List<String> getAllUsedCompressionCode();
-
-    int updateByPrimaryKeySelective(CompressionCodeDO compressionCodeDO);
+    List<String> selectAllCompressionCode();
 }

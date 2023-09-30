@@ -16,9 +16,9 @@
         <module>ddd-ezlink-domain</module>
         <module>ddd-ezlink-infrastructure</module>
         <module>ddd-ezlink-component-keygen</module>
+        <module>ddd-ezlink-component-bloomfilter</module>
         <module>ddd-ezlink-component-dl</module>
         <module>start</module>
-        <module>ddd-ezlink-component-bloomfilter</module>
 
     </modules>
 

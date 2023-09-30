@@ -35,24 +35,13 @@ public class CompressionCodeGatewayImpl implements CompressionCodeGateway {
         return compressionCodeMapper.getLatestAvailableCompressionCodeDO();
     }
 
-    /**
-     * 获取所有已使用的 compressionCode
-     * @return
-     */
-    @Override
-    public List<String> getAllUsedCompressionCode() {
-        CompressionCodeExample example = new CompressionCodeExample();
-        example.or().andCodeStatusEqualTo(CompressionCodeStatusEnum.USED.getValue());
-        List<CompressionCode> compressionCodes = compressionCodeMapper.selectByExample(example);
-        if (CollectionUtils.isEmpty(compressionCodes)) {
-            return new ArrayList<>();
-        }
-
-        return compressionCodes.stream().map(CompressionCode::getCompressionCode).collect(Collectors.toList());
-    }
-
     @Override
     public int updateByPrimaryKeySelective(CompressionCodeDO compressionCodeDO) {
         return compressionCodeMapper.updateByPrimaryKeySelective(compressionCodeConvertor.toPO(compressionCodeDO));
+    }
+
+    @Override
+    public List<String> selectAllCompressionCode() {
+        return compressionCodeMapper.selectAllCompressionCode();
     }
 }
