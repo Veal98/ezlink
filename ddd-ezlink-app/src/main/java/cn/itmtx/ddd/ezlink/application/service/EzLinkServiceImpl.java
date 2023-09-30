@@ -1,4 +1,4 @@
-package cn.itmtx.ddd.ezlink.application;
+package cn.itmtx.ddd.ezlink.application.service;
 
 import cn.itmtx.ddd.ezlink.application.executor.command.UrlMapAddCmdExe;
 import cn.itmtx.ddd.ezlink.application.executor.query.DispatchQryExe;

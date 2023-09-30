@@ -1,4 +1,4 @@
-package cn.itmtx.ddd.ezlink.application.job;
+package cn.itmtx.ddd.ezlink.adapter.web.job;
 
 import cn.itmtx.ddd.ezlink.component.dl.lock.DistributedLockFactory;
 import cn.itmtx.ddd.ezlink.domain.domainservice.VisitStatisticsDomain;

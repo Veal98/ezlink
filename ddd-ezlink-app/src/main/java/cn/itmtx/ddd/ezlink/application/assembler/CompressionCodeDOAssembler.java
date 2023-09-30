@@ -1,4 +1,4 @@
-package cn.itmtx.ddd.ezlink.domain.assembler;
+package cn.itmtx.ddd.ezlink.application.assembler;
 
 import org.springframework.stereotype.Component;
 

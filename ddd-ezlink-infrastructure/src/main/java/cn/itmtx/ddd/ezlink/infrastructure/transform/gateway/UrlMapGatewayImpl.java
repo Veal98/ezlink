@@ -2,7 +2,7 @@ package cn.itmtx.ddd.ezlink.infrastructure.transform.gateway;
 
 import cn.itmtx.ddd.ezlink.domain.domainobject.UrlMapDO;
 import cn.itmtx.ddd.ezlink.domain.gateway.UrlMapGateway;
-import cn.itmtx.ddd.ezlink.infrastructure.transform.assembler.UrlMapAssembler;
+import cn.itmtx.ddd.ezlink.infrastructure.transform.convertor.UrlMapConvertor;
 import cn.itmtx.ddd.ezlink.infrastructure.transform.mapper.UrlMapMapper;
 import cn.itmtx.ddd.ezlink.infrastructure.transform.po.UrlMap;
 import cn.itmtx.ddd.ezlink.infrastructure.transform.po.UrlMapExample;
@@ -18,11 +18,11 @@ public class UrlMapGatewayImpl implements UrlMapGateway {
     private UrlMapMapper urlMapMapper;
 
     @Autowired
-    private UrlMapAssembler urlMapAssembler;
+    private UrlMapConvertor urlMapConvertor;
 
     @Override
     public int insertUrlMapDO(UrlMapDO urlMapDO) {
-        return urlMapMapper.insertSelective(urlMapAssembler.fromUrlMapDO(urlMapDO));
+        return urlMapMapper.insertSelective(urlMapConvertor.toPO(urlMapDO));
     }
 
     @Override
@@ -30,6 +30,6 @@ public class UrlMapGatewayImpl implements UrlMapGateway {
         UrlMapExample urlMapExample = new UrlMapExample();
         urlMapExample.or().andCompressionCodeEqualTo(compressionCode);
         Optional<UrlMap> urlMap = urlMapMapper.selectByExample(urlMapExample).stream().findFirst();
-        return urlMap.isPresent() ? urlMapAssembler.toUrlMapDO(urlMap.get()) : null;
+        return urlMap.isPresent() ? urlMapConvertor.toDO(urlMap.get()) : null;
     }
 }

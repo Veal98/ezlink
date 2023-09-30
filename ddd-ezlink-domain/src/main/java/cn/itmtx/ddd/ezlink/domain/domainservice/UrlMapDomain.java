@@ -1,7 +1,5 @@
 package cn.itmtx.ddd.ezlink.domain.domainservice;
 
-import cn.itmtx.ddd.ezlink.client.dto.command.UrlMapAddCmd;
-import cn.itmtx.ddd.ezlink.client.dto.data.UrlMapDTO;
 import cn.itmtx.ddd.ezlink.component.keygen.SequenceGenerator;
 import cn.itmtx.ddd.ezlink.component.dl.lock.DistributedLockFactory;
 import cn.itmtx.ddd.ezlink.domain.domainobject.CompressionCodeDO;
@@ -10,7 +8,6 @@ import cn.itmtx.ddd.ezlink.domain.constant.UrlValidatorConstant;
 import cn.itmtx.ddd.ezlink.domain.enums.CompressionCodeStatusEnum;
 import cn.itmtx.ddd.ezlink.domain.domainobject.DomainConfDO;
 import cn.itmtx.ddd.ezlink.domain.domainobject.UrlMapDO;
-import cn.itmtx.ddd.ezlink.domain.assembler.UrlMapDOAssembler;
 import cn.itmtx.ddd.ezlink.domain.context.TransformContext;
 import cn.itmtx.ddd.ezlink.domain.enums.LockKeyEnum;
 import cn.itmtx.ddd.ezlink.domain.filter.TransformFilterChain;
@@ -19,10 +16,12 @@ import cn.itmtx.ddd.ezlink.domain.gateway.CompressionCodeGateway;
 import cn.itmtx.ddd.ezlink.domain.gateway.DomainConfGateway;
 import cn.itmtx.ddd.ezlink.domain.gateway.UrlMapGateway;
 import cn.itmtx.ddd.ezlink.domain.util.ConversionUtils;
+import com.google.common.hash.BloomFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.validator.routines.UrlValidator;
 import org.redisson.api.RLock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,9 +63,6 @@ public class UrlMapDomain {
     private UrlMapGateway urlMapGateway;
 
     @Autowired
-    private UrlMapDOAssembler urlMapDOAssembler;
-
-    @Autowired
     private DistributedLockFactory distributedLockFactory;
 
     @Autowired
@@ -77,20 +73,16 @@ public class UrlMapDomain {
 
     /**
      * 创建短链映射
-     * @param urlMapAddCmd
+     * @param urlMapDO
      * @return
      */
-    public UrlMapDTO createUrlMap(UrlMapAddCmd urlMapAddCmd) {
+    public void createUrlMap(UrlMapDO urlMapDO) {
         RLock lock = distributedLockFactory.getLock(LockKeyEnum.CREATE_URL_MAP.getCode());
         try {
             lock.lock(LockKeyEnum.CREATE_URL_MAP.getReleaseTime(), TimeUnit.MILLISECONDS);
-            UrlMapDO urlMapDO = new UrlMapDO();
 
-            String longUrl = urlMapAddCmd.getLongUrl();
+            String longUrl = urlMapDO.getLongUrl();
             Assert.isTrue(urlValidator.isValid(longUrl), String.format("长链接 [%s] 非法", longUrl));
-            urlMapDO.setLongUrl(longUrl);
-
-            urlMapDO.setDescription(urlMapAddCmd.getDescription());
 
             // 获取压缩码
             CompressionCodeDO compressionCodeDO = this.getAvailableCompressionCodeDO();
@@ -110,9 +102,6 @@ public class UrlMapDomain {
 
             // 刷新缓存
             urlMapCacheManager.refreshUrlMapCache(urlMapDO);
-
-            // UrlMapDO -> UrlMapDTO
-            return urlMapDOAssembler.toDTO(urlMapDO);
         } finally {
             lock.unlock();
         }

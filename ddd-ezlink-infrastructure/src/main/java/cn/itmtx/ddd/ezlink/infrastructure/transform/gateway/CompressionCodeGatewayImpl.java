@@ -3,7 +3,7 @@ package cn.itmtx.ddd.ezlink.infrastructure.transform.gateway;
 import cn.itmtx.ddd.ezlink.domain.domainobject.CompressionCodeDO;
 import cn.itmtx.ddd.ezlink.domain.enums.CompressionCodeStatusEnum;
 import cn.itmtx.ddd.ezlink.domain.gateway.CompressionCodeGateway;
-import cn.itmtx.ddd.ezlink.infrastructure.transform.assembler.CompressionCodeAssembler;
+import cn.itmtx.ddd.ezlink.infrastructure.transform.convertor.CompressionCodeConvertor;
 import cn.itmtx.ddd.ezlink.infrastructure.transform.mapper.CompressionCodeMapper;
 import cn.itmtx.ddd.ezlink.infrastructure.transform.po.CompressionCode;
 import cn.itmtx.ddd.ezlink.infrastructure.transform.po.CompressionCodeExample;
@@ -23,11 +23,11 @@ public class CompressionCodeGatewayImpl implements CompressionCodeGateway {
 
 
     @Autowired
-    private CompressionCodeAssembler compressionCodeAssembler;
+    private CompressionCodeConvertor compressionCodeConvertor;
 
     @Override
     public void insertCompressionCodeDO(CompressionCodeDO compressionCodeDO) {
-        compressionCodeMapper.insertSelective(compressionCodeAssembler.fromCompressionCodeDO(compressionCodeDO));
+        compressionCodeMapper.insertSelective(compressionCodeConvertor.toPO(compressionCodeDO));
     }
 
     @Override
@@ -53,6 +53,6 @@ public class CompressionCodeGatewayImpl implements CompressionCodeGateway {
 
     @Override
     public int updateByPrimaryKeySelective(CompressionCodeDO compressionCodeDO) {
-        return compressionCodeMapper.updateByPrimaryKeySelective(compressionCodeAssembler.fromCompressionCodeDO(compressionCodeDO));
+        return compressionCodeMapper.updateByPrimaryKeySelective(compressionCodeConvertor.toPO(compressionCodeDO));
     }
 }

@@ -13,7 +13,7 @@ public interface EzLinkService {
 
     /**
      * 短链重定向
-     * @param disPatchQry
+     * @param dispatchQry
      * @return
      */
     Mono<Void> dispatch(DisPatchQry dispatchQry);

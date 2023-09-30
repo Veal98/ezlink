@@ -1,4 +1,4 @@
-package cn.itmtx.ddd.ezlink.application.mq;
+package cn.itmtx.ddd.ezlink.adapter.web.mq;
 
 import cn.itmtx.ddd.ezlink.domain.domainobject.TransformEventRecordDO;
 import cn.itmtx.ddd.ezlink.domain.constant.KafkaConstant;

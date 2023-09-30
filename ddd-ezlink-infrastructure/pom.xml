@@ -18,6 +18,11 @@
             <groupId>cn.itmtx.ddd.ezlink</groupId>
             <artifactId>ddd-ezlink-domain</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.itmtx.ddd.ezlink</groupId>
+            <artifactId>ddd-ezlink-client</artifactId>
+        </dependency>
+
 
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
