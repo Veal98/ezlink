@@ -1,7 +1,8 @@
 package cn.itmtx.ddd.ezlink.domain.domainobject;
 
-import java.util.Date;
+import com.alibaba.cola.domain.Entity;
 
+@Entity
 public class UrlMapDO {
     private String shortUrl;
 

@@ -1,7 +1,10 @@
 package cn.itmtx.ddd.ezlink.domain.domainobject;
 
+import com.alibaba.cola.domain.Entity;
+
 import java.util.Date;
 
+@Entity
 public class VisitStatisticsDO {
     private Long id;
 

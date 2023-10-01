@@ -1,5 +1,8 @@
 package cn.itmtx.ddd.ezlink.domain.domainobject;
 
+import com.alibaba.cola.domain.Entity;
+
+@Entity
 public class SequenceAndCodeDO {
 
     /**

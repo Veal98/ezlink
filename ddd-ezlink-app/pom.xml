@@ -16,10 +16,6 @@
     <dependencies>
         <dependency>
             <groupId>cn.itmtx.ddd.ezlink</groupId>
-            <artifactId>ddd-ezlink-client</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>cn.itmtx.ddd.ezlink</groupId>
             <artifactId>ddd-ezlink-infrastructure</artifactId>
         </dependency>
 

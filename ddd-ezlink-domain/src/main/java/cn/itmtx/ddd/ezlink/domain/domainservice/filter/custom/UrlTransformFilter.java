@@ -6,6 +6,7 @@ import cn.itmtx.ddd.ezlink.domain.domainservice.context.TransformContext;
 import cn.itmtx.ddd.ezlink.domain.domainservice.enums.TransformStatusEnum;
 import cn.itmtx.ddd.ezlink.domain.domainservice.filter.TransformFilter;
 import cn.itmtx.ddd.ezlink.domain.domainservice.filter.TransformFilterChain;
+import cn.itmtx.ddd.ezlink.domain.exception.RedirectToErrorPageException;
 import com.alibaba.cola.exception.BizException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ public class UrlTransformFilter implements TransformFilter {
         if (Objects.isNull(urlMapDO)) {
             context.setTransformStatus(TransformStatusEnum.TRANSFORM_FAIL.getValue());
             log.warn("CompressionCode:[{}] not exists or occurred exception. Execution of the TransformFilterChain is terminated......", compressionCode);
-            throw new BizException(String.format("CompressionCode:[%s] not exists or occurred exception.", compressionCode));
+            throw new RedirectToErrorPageException(String.format("CompressionCode:[%s] not exists or occurred exception.", compressionCode));
         }
 
         context.setTransformStatus(TransformStatusEnum.TRANSFORM_SUCCESS.getValue());

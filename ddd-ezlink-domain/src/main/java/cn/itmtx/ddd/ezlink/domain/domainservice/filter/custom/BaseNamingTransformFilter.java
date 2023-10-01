@@ -46,9 +46,7 @@ public abstract class BaseNamingTransformFilter implements TransformFilter {
         long start = System.nanoTime();
         try {
             delegate.doFilter(chain, context);
-        } catch (Exception e) {
-            log.error("TransformFilter:{} do failed. " + e.getMessage(), filterName());
-            throw new BizException("{} do failed. ", filterName());
+            // 这里就不需要 catch 异常了，在各个 Filter 中 catch
         } finally {
             if (log.isDebugEnabled()) {
                 log.debug("Exit TransformFilter:{},execution cost {} ms...", filterName(), TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - start));
