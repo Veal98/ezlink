@@ -1,4 +1,4 @@
-package cn.itmtx.ddd.ezlink.domain.domainservice.exception;
+package cn.itmtx.ddd.ezlink.domain.exception;
 
 import com.alibaba.cola.exception.SysException;
 
