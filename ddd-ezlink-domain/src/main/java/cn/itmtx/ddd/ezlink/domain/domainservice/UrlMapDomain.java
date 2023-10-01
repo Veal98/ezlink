@@ -1,28 +1,25 @@
 package cn.itmtx.ddd.ezlink.domain.domainservice;
 
-import cn.itmtx.ddd.ezlink.component.keygen.SequenceAndCode;
-import cn.itmtx.ddd.ezlink.component.keygen.SequenceGenerator;
 import cn.itmtx.ddd.ezlink.component.dl.lock.DistributedLockFactory;
 import cn.itmtx.ddd.ezlink.domain.domainobject.CompressionCodeDO;
-import cn.itmtx.ddd.ezlink.domain.cache.UrlMapCacheManager;
-import cn.itmtx.ddd.ezlink.domain.constant.UrlValidatorConstant;
-import cn.itmtx.ddd.ezlink.domain.enums.CompressionCodeStatusEnum;
+import cn.itmtx.ddd.ezlink.domain.domainservice.cache.UrlMapCacheManager;
+import cn.itmtx.ddd.ezlink.domain.domainservice.constant.UrlValidatorConstant;
+import cn.itmtx.ddd.ezlink.domain.domainservice.enums.CompressionCodeStatusEnum;
 import cn.itmtx.ddd.ezlink.domain.domainobject.DomainConfDO;
 import cn.itmtx.ddd.ezlink.domain.domainobject.UrlMapDO;
-import cn.itmtx.ddd.ezlink.domain.context.TransformContext;
-import cn.itmtx.ddd.ezlink.domain.enums.LockKeyEnum;
-import cn.itmtx.ddd.ezlink.domain.filter.TransformFilterChain;
-import cn.itmtx.ddd.ezlink.domain.filter.TransformFilterChainFactory;
+import cn.itmtx.ddd.ezlink.domain.domainservice.context.TransformContext;
+import cn.itmtx.ddd.ezlink.domain.domainservice.enums.LockKeyEnum;
+import cn.itmtx.ddd.ezlink.domain.domainservice.filter.TransformFilterChain;
+import cn.itmtx.ddd.ezlink.domain.domainservice.filter.TransformFilterChainFactory;
+import cn.itmtx.ddd.ezlink.domain.domainobject.SequenceAndCodeDO;
+import cn.itmtx.ddd.ezlink.domain.domainservice.keygen.SequenceGenerator;
 import cn.itmtx.ddd.ezlink.domain.gateway.CompressionCodeGateway;
 import cn.itmtx.ddd.ezlink.domain.gateway.DomainConfGateway;
 import cn.itmtx.ddd.ezlink.domain.gateway.UrlMapGateway;
-import cn.itmtx.ddd.ezlink.domain.util.ConversionUtils;
-import com.google.common.hash.BloomFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.validator.routines.UrlValidator;
 import org.redisson.api.RLock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -156,9 +153,9 @@ public class UrlMapDomain {
             CompressionCodeDO compressionCodeDO = new CompressionCodeDO();
             compressionCodeDO.setStrategy(strategy);
             // 生成 62 进制压缩码
-            SequenceAndCode sequenceAndCode = sequenceGenerator.generate(longUrl);
-            compressionCodeDO.setSequenceValue(sequenceAndCode.getSequence());
-            compressionCodeDO.setCompressionCode(sequenceAndCode.getCompressionCode());
+            SequenceAndCodeDO sequenceAndCodeDO = sequenceGenerator.generate(longUrl);
+            compressionCodeDO.setSequenceValue(sequenceAndCodeDO.getSequence());
+            compressionCodeDO.setCompressionCode(sequenceAndCodeDO.getCompressionCode());
 
             // 存入数据库表 `compression_code`
             compressionCodeGateway.insertCompressionCodeDO(compressionCodeDO);

@@ -2,7 +2,7 @@ package cn.itmtx.ddd.ezlink.adapter.web.job;
 
 import cn.itmtx.ddd.ezlink.component.dl.lock.DistributedLockFactory;
 import cn.itmtx.ddd.ezlink.domain.domainservice.VisitStatisticsDomain;
-import cn.itmtx.ddd.ezlink.domain.enums.LockKeyEnum;
+import cn.itmtx.ddd.ezlink.domain.domainservice.enums.LockKeyEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +10,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.OffsetDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.util.concurrent.TimeUnit;
 
 /**

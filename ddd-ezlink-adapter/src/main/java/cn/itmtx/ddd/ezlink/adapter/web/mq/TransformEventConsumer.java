@@ -1,7 +1,7 @@
 package cn.itmtx.ddd.ezlink.adapter.web.mq;
 
 import cn.itmtx.ddd.ezlink.domain.domainobject.TransformEventRecordDO;
-import cn.itmtx.ddd.ezlink.domain.constant.KafkaConstant;
+import cn.itmtx.ddd.ezlink.domain.domainservice.constant.KafkaConstant;
 import cn.itmtx.ddd.ezlink.domain.domainservice.TransformEventRecordDomain;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;

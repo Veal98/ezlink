@@ -1,19 +1,13 @@
 package cn.itmtx.ddd.ezlink.infrastructure.transform.gateway;
 
 import cn.itmtx.ddd.ezlink.domain.domainobject.CompressionCodeDO;
-import cn.itmtx.ddd.ezlink.domain.enums.CompressionCodeStatusEnum;
 import cn.itmtx.ddd.ezlink.domain.gateway.CompressionCodeGateway;
 import cn.itmtx.ddd.ezlink.infrastructure.transform.convertor.CompressionCodeConvertor;
 import cn.itmtx.ddd.ezlink.infrastructure.transform.mapper.CompressionCodeMapper;
-import cn.itmtx.ddd.ezlink.infrastructure.transform.po.CompressionCode;
-import cn.itmtx.ddd.ezlink.infrastructure.transform.po.CompressionCodeExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class CompressionCodeGatewayImpl implements CompressionCodeGateway {

@@ -1,7 +1,7 @@
 package cn.itmtx.ddd.ezlink.application.executor.query;
 
 import cn.itmtx.ddd.ezlink.client.dto.query.DisPatchQry;
-import cn.itmtx.ddd.ezlink.domain.context.TransformContext;
+import cn.itmtx.ddd.ezlink.domain.domainservice.context.TransformContext;
 import cn.itmtx.ddd.ezlink.domain.domainservice.UrlMapDomain;
 import com.alibaba.cola.dto.Command;
 import org.springframework.beans.factory.annotation.Autowired;

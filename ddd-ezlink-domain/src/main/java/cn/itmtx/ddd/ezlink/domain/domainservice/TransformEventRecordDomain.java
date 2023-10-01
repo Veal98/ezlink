@@ -2,7 +2,7 @@ package cn.itmtx.ddd.ezlink.domain.domainservice;
 
 import cn.itmtx.ddd.ezlink.domain.domainobject.TransformEventRecordDO;
 import cn.itmtx.ddd.ezlink.domain.gateway.TransformEventRecordGateway;
-import cn.itmtx.ddd.ezlink.domain.util.UserAgentUtils;
+import cn.itmtx.ddd.ezlink.domain.domainservice.util.UserAgentUtils;
 import eu.bitwalker.useragentutils.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
