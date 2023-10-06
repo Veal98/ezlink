@@ -35,17 +35,6 @@ public class RateLimiterAspect {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    private static final String UNKNOWN_VALUE = "unknown";
-    private static final String LOCALHOST_V0 = "0.0.0.0";
-    private static final String LOCALHOST_V4 = "127.0.0.1";
-    private static final String LOCALHOST_V6 = "0:0:0:0:0:0:0:1";
-
-    private static final String X_FORWARDED_FOR_KEY = "X-Forwarded-For";
-    private static final String PROXY_CLIENT_IP_KEY = "Proxy-Client-IP";
-    private static final String WL_PROXY_CLIENT_IP_KEY = "WL-Proxy-Client-IP";
-    private static final String HTTP_CLIENT_IP_KEY = "HTTP_CLIENT_IP";
-    private static final String HTTP_X_FORWARDED_FOR_KEY = "HTTP_X_FORWARDED_FOR";
-
     @Before("@annotation(rateLimiter)")
     public void doBefore(JoinPoint joinPoint, RateLimiter rateLimiter) {
         String key = rateLimiter.key();
