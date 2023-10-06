@@ -26,13 +26,6 @@
             <artifactId>ddd-ezlink-component-ratelimiter</artifactId>
         </dependency>
 
-        <!-- COLA components -->
-        <dependency>
-            <groupId>com.alibaba.cola</groupId>
-            <artifactId>cola-component-domain-starter</artifactId>
-        </dependency>
-        <!-- COLA components End-->
-
         <!--引入这个包的目的是为了使用事务-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

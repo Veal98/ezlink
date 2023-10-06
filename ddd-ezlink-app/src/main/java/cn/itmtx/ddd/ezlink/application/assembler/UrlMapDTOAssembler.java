@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * DO <-> DTO
  */
 @Component
-public class UrlMapDOAssembler {
+public class UrlMapDTOAssembler {
     public UrlMapDO toDO(UrlMapDTO urlMapDTO) {
         UrlMapDO urlMapDO = new UrlMapDO();
         BeanUtils.copyProperties(urlMapDTO, urlMapDO);

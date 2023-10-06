@@ -6,5 +6,5 @@ import org.springframework.stereotype.Component;
  * DO <-> DTO
  */
 @Component
-public class CompressionCodeDOAssembler {
+public class CompressionCodeDTOAssembler {
 }

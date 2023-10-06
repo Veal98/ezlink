@@ -7,6 +7,16 @@ public class UrlMapDTO extends DTO {
 
     String shortUrl;
 
+    String longUrl;
+
+    public String getLongUrl() {
+        return longUrl;
+    }
+
+    public void setLongUrl(String longUrl) {
+        this.longUrl = longUrl;
+    }
+
     public String getShortUrl() {
         return shortUrl;
     }
