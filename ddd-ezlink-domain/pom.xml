@@ -21,6 +21,10 @@
             <groupId>cn.itmtx.ddd.ezlink</groupId>
             <artifactId>ddd-ezlink-component-dl</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.itmtx.ddd.ezlink</groupId>
+            <artifactId>ddd-ezlink-component-ratelimiter</artifactId>
+        </dependency>
 
         <!-- COLA components -->
         <dependency>

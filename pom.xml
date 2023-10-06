@@ -18,6 +18,7 @@
         <module>ddd-ezlink-component-bloomfilter</module>
         <module>ddd-ezlink-component-dl</module>
         <module>start</module>
+        <module>ddd-ezlink-component-ratelimiter</module>
 
     </modules>
 
@@ -37,6 +38,7 @@
         <user.agent.utils.version>1.21</user.agent.utils.version>
         <commons.validator.version>1.6</commons.validator.version>
         <guava.version>29.0-jre</guava.version>
+        <dubbo.version>2.7.7</dubbo.version>
     </properties>
 
     <dependencies>
@@ -125,6 +127,11 @@
                 <artifactId>ddd-ezlink-component-bloomfilter</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>cn.itmtx.ddd.ezlink</groupId>
+                <artifactId>ddd-ezlink-component-ratelimiter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <!--Project modules End-->
 
             <dependency>
@@ -191,6 +198,12 @@
                 <groupId>commons-validator</groupId>
                 <artifactId>commons-validator</artifactId>
                 <version>${commons.validator.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
+                <version>${dubbo.version}</version>
             </dependency>
 
         </dependencies>

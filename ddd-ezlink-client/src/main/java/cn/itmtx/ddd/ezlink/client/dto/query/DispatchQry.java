@@ -3,7 +3,7 @@ package cn.itmtx.ddd.ezlink.client.dto.query;
 import com.alibaba.cola.dto.Query;
 import org.springframework.web.server.ServerWebExchange;
 
-public class DisPatchQry extends Query {
+public class DispatchQry extends Query {
     private String compressionCode;
 
     private ServerWebExchange exchange;

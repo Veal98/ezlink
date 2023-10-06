@@ -7,8 +7,10 @@ import com.alibaba.cola.exception.SysException;
  */
 public class RedirectToErrorPageException extends SysException {
 
+    private static final String DEFAULT_ERR_CODE = "REDIRECT_ERROR";
+
     public RedirectToErrorPageException(String errMessage) {
-        super(ErrorCode.REDIRECT_TO_ERROR_PAGE_EXCEPTION.getDefaultErrCode(), errMessage);
+        super(DEFAULT_ERR_CODE, errMessage);
     }
 
     public RedirectToErrorPageException(String errCode, String errMessage) {
@@ -16,7 +18,7 @@ public class RedirectToErrorPageException extends SysException {
     }
 
     public RedirectToErrorPageException(String errMessage, Throwable e) {
-        super(ErrorCode.REDIRECT_TO_ERROR_PAGE_EXCEPTION.getDefaultErrCode(), errMessage, e);
+        super(DEFAULT_ERR_CODE, errMessage, e);
     }
 
     public RedirectToErrorPageException(String errorCode, String errMessage, Throwable e) {

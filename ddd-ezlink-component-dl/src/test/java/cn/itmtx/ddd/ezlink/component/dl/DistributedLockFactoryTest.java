@@ -25,7 +25,6 @@ public class DistributedLockFactoryTest {
             System.out.println("lock success");
             Thread.sleep(2000);
         } catch (Exception e) {
-            // 向上抛出，最外层有 @CatchAndLog 注解用来处理异常和打印日志
             e.printStackTrace();
         } finally {
             lock.unlock();
