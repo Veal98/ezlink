@@ -24,9 +24,6 @@ public abstract class SequenceGenerator {
     @Qualifier("compressionCodeBloom")
     private BloomFilter<String> compressionCodeBloom;
 
-    @Autowired
-    private UrlMapCacheManager urlMapCacheManager;
-
     /**
      * 62 进制压缩码的长度
      */

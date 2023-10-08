@@ -39,10 +39,10 @@ CREATE TABLE `domain_conf`
 CREATE TABLE `compression_code`
 (
     `id`               BIGINT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '主键',
-    `compression_code` VARCHAR(16)     NOT NULL COMMENT '压缩码 (是唯一的)',
+    `compression_code` VARCHAR(16)     NOT NULL COMMENT '62进制的压缩码',
     `code_status`      TINYINT         NOT NULL DEFAULT 1 COMMENT '压缩码状态,1:未使用,2:已使用,3:已失效',
-    `sequence_value`   VARCHAR(64)     NOT NULL COMMENT '序列(盐)',
-    `strategy`         VARCHAR(8)      NOT NULL DEFAULT 'sequence' COMMENT '策略,hash或者idgenerator(ID生成器)',
+    `sequence_value`   VARCHAR(64)     NOT NULL COMMENT '10进制的压缩码',
+    `strategy`         VARCHAR(8)      NOT NULL COMMENT '策略,hash或者id(ID生成器)',
     `create_time`      DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `edit_time`        DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     `creator`          VARCHAR(32)     NOT NULL DEFAULT 'admin' COMMENT '创建者',
