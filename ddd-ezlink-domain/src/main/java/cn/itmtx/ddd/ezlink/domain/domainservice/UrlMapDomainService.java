@@ -16,7 +16,9 @@ import cn.itmtx.ddd.ezlink.domain.domainservice.keygen.SequenceGenerator;
 import cn.itmtx.ddd.ezlink.domain.gateway.CompressionCodeGateway;
 import cn.itmtx.ddd.ezlink.domain.gateway.DomainConfGateway;
 import cn.itmtx.ddd.ezlink.domain.gateway.UrlMapGateway;
+import com.alibaba.cola.exception.SysException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.UrlValidator;
 import org.redisson.api.RLock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +33,7 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 @Slf4j
-public class UrlMapDomain {
+public class UrlMapDomainService {
 
     @Resource(name = "${ezlink.generate.sequence-generator.type}SequenceGenerator")
     private SequenceGenerator sequenceGenerator;
@@ -183,6 +185,10 @@ public class UrlMapDomain {
      */
     private String generateShortUrl(String compressionCode) {
         DomainConfDO domainConfDO = domainConfGateway.getDomainConfDOByDomainValue(defaultDomain);
+        if (Objects.isNull(domainConfDO) || StringUtils.isEmpty(domainConfDO.getProtocol())) {
+            log.warn("domain not exists in db.");
+            throw new SysException("domain not exists. can not generate short url");
+        }
         String protocol = domainConfDO.getProtocol();
         return String.format("%s://%s/%s", protocol, defaultDomain, compressionCode);
     }

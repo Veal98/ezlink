@@ -1,4 +1,4 @@
-package cn.itmtx.ddd.ezlink.adapter.web.http.handler;
+package cn.itmtx.ddd.ezlink.adapter.http.advice;
 
 import com.alibaba.cola.dto.Response;
 import com.alibaba.cola.exception.BizException;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @ControllerAdvice
 @Slf4j
-public class HttpGlobalExceptionHandler {
+public class HttpGlobalExceptionAdvice {
 
     @ExceptionHandler(value= SysException.class)
     @ResponseBody

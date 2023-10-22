@@ -1,6 +1,6 @@
-package cn.itmtx.ddd.ezlink.adapter.web.http;
+package cn.itmtx.ddd.ezlink.adapter.http;
 
-import cn.itmtx.ddd.ezlink.adapter.web.constant.API;
+import cn.itmtx.ddd.ezlink.adapter.constant.API;
 import cn.itmtx.ddd.ezlink.client.api.UrlMapService;
 import cn.itmtx.ddd.ezlink.client.dto.command.UrlMapAddCmd;
 import cn.itmtx.ddd.ezlink.client.dto.data.UrlMapDTO;

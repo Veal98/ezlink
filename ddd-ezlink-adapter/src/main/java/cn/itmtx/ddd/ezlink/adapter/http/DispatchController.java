@@ -1,4 +1,4 @@
-package cn.itmtx.ddd.ezlink.adapter.web.http;
+package cn.itmtx.ddd.ezlink.adapter.http;
 
 import cn.itmtx.ddd.ezlink.client.api.DispatchService;
 import cn.itmtx.ddd.ezlink.client.dto.query.DispatchQry;

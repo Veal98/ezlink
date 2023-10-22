@@ -9,7 +9,7 @@ public enum CacheKeyEnum {
     /**
      * 可访问的压缩码映射
      */
-    ACCESS_CODE_HASH("octopus:access:code:hash", "可访问的压缩码映射", -1L),
+    ACCESS_CODE_HASH("ezlink:access:code:hash", "可访问的压缩码映射", -1L),
 
     ;
 

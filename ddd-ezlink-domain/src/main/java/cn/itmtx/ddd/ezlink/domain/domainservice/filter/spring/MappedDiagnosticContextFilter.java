@@ -17,6 +17,7 @@ import java.util.UUID;
  */
 @Order(value = Integer.MIN_VALUE)
 @Component
+@Deprecated
 public class MappedDiagnosticContextFilter implements WebFilter {
 
     @Override

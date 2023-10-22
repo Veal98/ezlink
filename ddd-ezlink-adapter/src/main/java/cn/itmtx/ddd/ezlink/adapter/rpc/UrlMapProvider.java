@@ -1,6 +1,6 @@
-package cn.itmtx.ddd.ezlink.adapter.web.rpc;
+package cn.itmtx.ddd.ezlink.adapter.rpc;
 
-import cn.itmtx.ddd.ezlink.adapter.web.constant.RPC;
+import cn.itmtx.ddd.ezlink.adapter.constant.RPC;
 import cn.itmtx.ddd.ezlink.application.service.UrlMapServiceImpl;
 import cn.itmtx.ddd.ezlink.client.api.UrlMapService;
 import lombok.extern.slf4j.Slf4j;

@@ -1,10 +1,8 @@
 package cn.itmtx.ddd.ezlink.domain.domainobject;
 
-import com.alibaba.cola.domain.Entity;
 
 import java.util.Date;
 
-@Entity
 public class TransformEventRecordDO {
 
     private String clientIp;

@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-public class TransformEventRecordDomain {
+public class TransformEventRecordDomainService {
 
     @Autowired
     private TransformEventRecordGateway transformEventRecordGateway;

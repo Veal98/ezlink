@@ -1,6 +1,6 @@
 package cn.itmtx.ddd.ezlink.application;
 
-import cn.itmtx.ddd.ezlink.adapter.web.job.VisitStatisticsJob;
+import cn.itmtx.ddd.ezlink.adapter.job.VisitStatisticsJob;
 import cn.itmtx.ddd.ezlink.start.Application;
 import org.junit.Test;
 import org.junit.runner.RunWith;

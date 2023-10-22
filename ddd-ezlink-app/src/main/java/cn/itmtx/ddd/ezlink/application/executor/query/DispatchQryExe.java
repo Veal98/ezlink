@@ -2,10 +2,9 @@ package cn.itmtx.ddd.ezlink.application.executor.query;
 
 import cn.itmtx.ddd.ezlink.client.dto.query.DispatchQry;
 import cn.itmtx.ddd.ezlink.domain.domainservice.context.TransformContext;
-import cn.itmtx.ddd.ezlink.domain.domainservice.UrlMapDomain;
+import cn.itmtx.ddd.ezlink.domain.domainservice.UrlMapDomainService;
 import cn.itmtx.ddd.ezlink.domain.domainservice.util.WebFluxServerResponseWriter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
@@ -20,7 +19,7 @@ import java.util.Set;
 public class DispatchQryExe {
 
     @Autowired
-    private UrlMapDomain urlMapDomain;
+    private UrlMapDomainService urlMapDomainService;
 
     @Autowired
     private WebFluxServerResponseWriter webFluxServerResponseWriter;
@@ -30,7 +29,7 @@ public class DispatchQryExe {
         TransformContext context = generateTransformContext(dispatchQry.getCompressionCode(), dispatchQry.getExchange());
 
         // 处理短链转换
-        urlMapDomain.processTransform(context);
+        urlMapDomainService.processTransform(context);
         // 执行重定向(flush用到的线程和内部逻辑处理的线程不是同一个线程, 所以 redirectAction 要用 TTL 存)
         return Mono.fromRunnable(context.getRedirectAction());
     }

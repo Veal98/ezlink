@@ -1,4 +1,4 @@
-package cn.itmtx.ddd.ezlink.adapter.web.constant;
+package cn.itmtx.ddd.ezlink.adapter.constant;
 
 public class RPC {
 
