@@ -187,7 +187,7 @@ public class UrlMapDomainService {
         DomainConfDO domainConfDO = domainConfGateway.getDomainConfDOByDomainValue(defaultDomain);
         if (Objects.isNull(domainConfDO) || StringUtils.isEmpty(domainConfDO.getProtocol())) {
             log.warn("domain not exists in db.");
-            throw new SysException("domain not exists. can not generate short url");
+            throw new SysException("domain not exists in db. can not generate short url");
         }
         String protocol = domainConfDO.getProtocol();
         return String.format("%s://%s/%s", protocol, defaultDomain, compressionCode);

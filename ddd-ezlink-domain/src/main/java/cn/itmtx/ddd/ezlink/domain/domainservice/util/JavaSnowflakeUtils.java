@@ -38,6 +38,10 @@ public class JavaSnowflakeUtils {
     private long processId = 1L;
     private static long processMask = -1L ^ (-1L << datacenterIdBits);
 
+    // 时钟回拨最大等待时间，单位毫秒
+    private static final long MAX_WAIT_MILLIS = 100;
+
+
     private static JavaSnowflakeUtils snowFlake = null;
 
     static {
@@ -62,9 +66,9 @@ public class JavaSnowflakeUtils {
     }
 
     public synchronized long getNextId() {
-        //获取时间戳
+        // 获取时间戳
         long timestamp = timeGen();
-        //如果时间戳小于上次时间戳则报错
+        // 如果时间戳小于上次时间戳则报错（发生了时间回拨）
         if (timestamp < lastTimestamp) {
             try {
                 throw new Exception("Clock moved backwards.  Refusing to generate id for " + (lastTimestamp - timestamp) + " milliseconds");
@@ -72,7 +76,7 @@ public class JavaSnowflakeUtils {
                 e.printStackTrace();
             }
         }
-        //如果时间戳与上次时间戳相同
+        // 如果时间戳与上次时间戳相同
         if (lastTimestamp == timestamp) {
             // 当前毫秒内，则+1，与sequenceMask确保sequence不会超出上限
             sequence = (sequence + 1) & sequenceMask;

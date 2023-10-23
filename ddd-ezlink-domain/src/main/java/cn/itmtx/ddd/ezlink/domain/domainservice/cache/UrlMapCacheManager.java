@@ -9,10 +9,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.Objects;
 
 @Component
@@ -25,6 +27,15 @@ public class UrlMapCacheManager {
     @Autowired
     @Qualifier("compressionCodeBloom")
     private BloomFilter<String> compressionCodeBloom;
+
+    /**
+     * 缓存预热阈值
+     */
+    @Value("${ezlink.cache.preload.threshold}")
+    private Integer preloadThreshold;
+
+    @Autowired
+
 
     private final StringRedisTemplate stringRedisTemplate;
 
@@ -75,5 +86,13 @@ public class UrlMapCacheManager {
         // 刷新缓存
         this.refreshUrlMapCache(urlMapDO);
         return urlMapDO;
+    }
+
+    /**
+     * TODO 缓存预热:在系统启动时，将部分热门压缩码提前加载到缓存中，避免第一次查询时穿透缓存
+     */
+    @PostConstruct
+    public void preloadCache() {
+
     }
 }

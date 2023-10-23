@@ -8,6 +8,7 @@ public enum CacheKeyEnum {
 
     /**
      * 可访问的压缩码映射
+     * 暂定设置用不过期
      */
     ACCESS_CODE_HASH("ezlink:access:code:hash", "可访问的压缩码映射", -1L),
 
