@@ -22,6 +22,7 @@ public class UrlMapServiceImpl implements UrlMapService {
 
     @Override
     public SingleResponse<UrlMapDTO> getLongByShort(LongByShortQry longByShortQry) {
-        return null;
+        // TODO
+        return SingleResponse.of(null);
     }
 }
