@@ -1,0 +1,44 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7.31
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ezlink
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+      # 防止中文乱码
+      LANG: C.UTF-8
+      MYSQL_CHARSET: utf8mb4
+      MYSQL_COLLATION: utf8mb4_unicode_ci
+    ports:
+      - "3306:3306"
+    container_name: mysql_ezlink
+    volumes:
+      # 挂在 migration.sql 在 mysql 容器的初始化脚本中
+      - ./migration.sql:/docker-entrypoint-initdb.d/migration.sql
+
+  redis:
+    image: redis:3.2
+    ports:
+      - "6379:6379"
+    container_name: redis_ezlink
+
+  zookeeper:
+    image: zookeeper:latest
+    ports:
+      - "2181:2181"
+    container_name: zookeeper_ezlink
+
+  kafka:
+    image: wurstmeister/kafka:latest
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 0
+      KAFKA_ZOOKEEPER_CONNECT: "docker.for.mac.host.internal:2181/kafka"
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://docker.for.mac.host.internal:9092"
+      KAFKA_LISTENERS: "PLAINTEXT://0.0.0.0:9092"
+    depends_on:
+      - zookeeper
+    container_name: kafka_ezlink
