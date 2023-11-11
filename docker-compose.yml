@@ -26,6 +26,7 @@ services:
 
   zookeeper:
     image: zookeeper:latest
+    # 本地端口 2181 映射到容器端口 2181
     ports:
       - "2181:2181"
     container_name: zookeeper_ezlink
@@ -36,9 +37,12 @@ services:
       - "9092:9092"
     environment:
       KAFKA_BROKER_ID: 0
+      # KAFKA_ZOOKEEPER_CONNECT 是必须的，指定了 kafka 连接到哪个 zookeeper
+      # IP 直接写 zookeeper 的 container_name 就可以，同一台物理机上，docker-compose 可以使用 container_name 找到相应的服务
       KAFKA_ZOOKEEPER_CONNECT: "zookeeper_ezlink:2181/kafka"
-      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://kafka_ezlink:9092"
-      KAFKA_LISTENERS: "PLAINTEXT://0.0.0.0:9092"
+      # Kafka 监听地址，此处填宿主机的 IP，若需要在服务器上部署记得修改为服务器 IP
+      KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
+    # 等 zookeeper 启动完成后再启动 kafka
     depends_on:
       - zookeeper
     container_name: kafka_ezlink

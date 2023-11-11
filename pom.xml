@@ -10,7 +10,6 @@
     <name>ddd-ezlink</name>
 
     <modules>
-        <module>ddd-ezlink-client</module>
         <module>ddd-ezlink-adapter</module>
         <module>ddd-ezlink-app</module>
         <module>ddd-ezlink-domain</module>
@@ -23,6 +22,8 @@
     </modules>
 
     <properties>
+        <!--契约的版本号-->
+        <client.version>1.0.0-SNAPSHOT</client.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>${maven.compiler.source}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -100,7 +101,7 @@
             <dependency>
                 <groupId>cn.itmtx.ddd.ezlink</groupId>
                 <artifactId>ddd-ezlink-client</artifactId>
-                <version>${project.version}</version>
+                <version>${client.version}</version>
             </dependency>
             <dependency>
                 <groupId>cn.itmtx.ddd.ezlink</groupId>

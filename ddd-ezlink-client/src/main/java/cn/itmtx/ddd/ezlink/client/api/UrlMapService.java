@@ -2,10 +2,8 @@ package cn.itmtx.ddd.ezlink.client.api;
 
 import cn.itmtx.ddd.ezlink.client.dto.command.UrlMapAddCmd;
 import cn.itmtx.ddd.ezlink.client.dto.data.UrlMapDTO;
-import cn.itmtx.ddd.ezlink.client.dto.query.DispatchQry;
 import cn.itmtx.ddd.ezlink.client.dto.query.LongByShortQry;
 import com.alibaba.cola.dto.SingleResponse;
-import reactor.core.publisher.Mono;
 
 public interface UrlMapService {
 
