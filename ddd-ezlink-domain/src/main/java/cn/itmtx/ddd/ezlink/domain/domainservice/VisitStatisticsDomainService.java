@@ -27,9 +27,9 @@ public class VisitStatisticsDomainService {
      */
     public void processVisitStatisticsDuration(OffsetDateTime start, OffsetDateTime end) {
         // 统计这个区间内的转换记录
-        List<VisitStatisticsDO> visitStatisticsDOS = transformEventRecordGateway.getVisitStatisticsDuration(start, end);
+        List<VisitStatisticsDO> visitStatisticsDOs = transformEventRecordGateway.getVisitStatisticsDuration(start, end);
 
-        visitStatisticsDOS.forEach(visitStatisticsDO -> {
+        visitStatisticsDOs.forEach(visitStatisticsDO -> {
             // 查 visit_statistics 表这条统计记录是否存在
             VisitStatisticsDO selectiveVisitStatisticsDO = visitStatisticsGateway.selectByUniqueKey(
                     visitStatisticsDO.getStatisticsDate(),
