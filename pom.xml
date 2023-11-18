@@ -40,6 +40,7 @@
         <commons.validator.version>1.6</commons.validator.version>
         <guava.version>29.0-jre</guava.version>
         <dubbo.version>2.7.7</dubbo.version>
+        <dubbo-registry-zookeeper.version>2.7.7</dubbo-registry-zookeeper.version>
     </properties>
 
     <dependencies>
@@ -81,7 +82,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
+·
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -205,6 +206,11 @@
                 <groupId>org.apache.dubbo</groupId>
                 <artifactId>dubbo-spring-boot-starter</artifactId>
                 <version>${dubbo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-registry-zookeeper</artifactId>
+                <version>${dubbo-registry-zookeeper.version}</version>
             </dependency>
 
         </dependencies>

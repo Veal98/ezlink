@@ -33,16 +33,30 @@ services:
 
   kafka:
     image: wurstmeister/kafka:latest
+    container_name: kafka_ezlink
+    # 等待zk启动后再启动
+    depends_on:
+      - zookeeper
     ports:
       - "9092:9092"
     environment:
-      KAFKA_BROKER_ID: 0
-      # KAFKA_ZOOKEEPER_CONNECT 是必须的，指定了 kafka 连接到哪个 zookeeper
-      # IP 直接写 zookeeper 的 container_name 就可以，同一台物理机上，docker-compose 可以使用 container_name 找到相应的服务
-      KAFKA_ZOOKEEPER_CONNECT: "zookeeper_ezlink:2181/kafka"
-      # Kafka 监听地址，此处填宿主机的 IP，若需要在服务器上部署记得修改为服务器 IP
-      KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
-    # 等 zookeeper 启动完成后再启动 kafka
+      # kafka 集群中，每个 kafka 都有一个 BROKER_ID 来区分自己
+      - KAFKA_BROKER_ID=0
+      # 配置 zookeeper 管理 kafka 的路径
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper_ezlink:2181/kafka
+      # 把kafka的地址端口注册到 zookeeper 上, 服务器部署需要把 localhost 换成服务器的 IP 地址
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092
+      # kafka监听地址
+      - KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092
+
+  dubbo:
+    image: chenchuxin/dubbo-admin:latest
+    container_name: dubbo_ezlink
     depends_on:
       - zookeeper
-    container_name: kafka_ezlink
+    ports:
+      - "9090:8080"
+    environment:
+      - dubbo.registry.address=zookeeper://zookeeper_ezlink:2181
+      - dubbo.admin.root.password=root
+      - dubbo.admin.guest.password=guest

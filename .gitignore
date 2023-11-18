@@ -2,3 +2,4 @@
 *.iml
 target
 out
+start/src/main/resources/application-prod.properties
