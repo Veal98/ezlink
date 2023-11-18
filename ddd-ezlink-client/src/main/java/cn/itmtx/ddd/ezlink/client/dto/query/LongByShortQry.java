@@ -4,13 +4,13 @@ import com.alibaba.cola.dto.Query;
 
 public class LongByShortQry extends Query {
 
-    private String longUrl;
+    private String shortUrl;
 
-    public String getLongUrl() {
-        return longUrl;
+    public String getShortUrl() {
+        return shortUrl;
     }
 
-    public void setLongUrl(String longUrl) {
-        this.longUrl = longUrl;
+    public void setShortUrl(String shortUrl) {
+        this.shortUrl = shortUrl;
     }
 }
