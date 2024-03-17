@@ -1,9 +1,10 @@
 package cn.itmtx.ddd.ezlink.application.executor.query;
 
 import cn.itmtx.ddd.ezlink.client.dto.query.DispatchQry;
-import cn.itmtx.ddd.ezlink.domain.domainservice.context.TransformContext;
 import cn.itmtx.ddd.ezlink.domain.domainservice.UrlMapDomainService;
+import cn.itmtx.ddd.ezlink.domain.domainservice.context.TransformContext;
 import cn.itmtx.ddd.ezlink.domain.domainservice.util.WebFluxServerResponseWriter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -11,11 +12,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 import java.util.Objects;
 import java.util.Set;
 
 @Component
+@Slf4j
 public class DispatchQryExe {
 
     @Autowired
@@ -31,7 +34,10 @@ public class DispatchQryExe {
         // 处理短链转换
         urlMapDomainService.processTransform(context);
         // 执行重定向(flush用到的线程和内部逻辑处理的线程不是同一个线程, 所以 redirectAction 要用 TTL 存)
-        return Mono.fromRunnable(context.getRedirectAction());
+        log.info("构造重定向任务的线程 ID:" + Thread.currentThread().getId());
+        return Mono.fromRunnable(context.getRedirectAction())
+                .publishOn(Schedulers.parallel())
+                .doOnSuccess(value -> log.info("真正执行重定向任务的线程 ID:" + Thread.currentThread().getId())).then();
     }
 
     private TransformContext generateTransformContext(String compressionCode, ServerWebExchange exchange) {

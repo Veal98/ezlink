@@ -39,7 +39,7 @@ public class DispatchController {
      */
     @ResponseStatus(HttpStatus.FOUND)
     @GetMapping("/{compressionCode}")
-    @RateLimiter(count = 3, time = 5, limitType = LimitType.IP)
+    // @RateLimiter(count = 3, time = 5, limitType = LimitType.IP)
     public Mono<Void> dispatch(ServerWebExchange exchange, @PathVariable(name = "compressionCode") String compressionCode) {
         DispatchQry dispatchQry = new DispatchQry();
         dispatchQry.setCompressionCode(compressionCode);

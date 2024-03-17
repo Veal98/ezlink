@@ -1,5 +1,6 @@
 package cn.itmtx.ddd.ezlink.domain.domainservice.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -7,7 +8,6 @@ import org.springframework.http.codec.HttpMessageReader;
 import org.springframework.http.codec.HttpMessageWriter;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.lang.NonNull;
-import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.RequestPredicates;
@@ -17,12 +17,14 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import org.springframework.web.reactive.result.view.ViewResolver;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+
 import java.net.URI;
 import java.util.Collections;
 import java.util.List;
 
 import static org.springframework.web.cors.CorsConfiguration.ALL;
 
+@Slf4j
 public class WebFluxServerResponseWriter {
 
     private List<HttpMessageReader<?>> messageReaders = Collections.emptyList();
