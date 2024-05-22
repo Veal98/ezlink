@@ -1,9 +1,9 @@
 package cn.itmtx.ddd.ezlink.domain.domainservice.keygen;
 
+import cn.itmtx.ddd.ezlink.component.bloomfilter.BloomFilterHelper;
 import cn.itmtx.ddd.ezlink.domain.domainservice.enums.SequenceGeneratorStrategyEnum;
 import cn.itmtx.ddd.ezlink.domain.domainservice.util.ConversionUtils;
 import cn.itmtx.ddd.ezlink.domain.domainservice.util.JavaSnowflakeUtils;
-import com.google.common.hash.BloomFilter;
 import org.springframework.stereotype.Component;
 
 /**
@@ -38,24 +38,25 @@ public class IdDecimalSequenceGenerator implements DecimalSequenceGenerator{
      *
      * @param longUrl
      * @param compressionCodeLength
-     * @param compressionCodeBloom
      * @return
      */
     @Override
-    public long fixConflict(String longUrl, Integer compressionCodeLength, BloomFilter<String> compressionCodeBloom) {
+    public long fixConflict(String longUrl, Integer compressionCodeLength) {
         // 重新生成 10 进制压缩码
         long newSequence = this.generateDecimalSequence(longUrl);
         // 10 进制转 62 进制
         String newCompressionCode = ConversionUtils.X.encode62(newSequence, compressionCodeLength);
         // 判断是否在 BloomFilter 中
-        boolean isInBloomFilter = compressionCodeBloom.mightContain(newCompressionCode);
+        boolean isInBloomFilter = BloomFilterHelper.mightContain(newCompressionCode);
 
+        // bloomfiter 判断不在那么一定不在，判断存在不一定真的存在
+        // 所以这里不一定是真的发生冲突了，可以查库看下是不是真的已经存在相同的压缩码。但是查库性能损耗大，不如直接重新生成一次压缩码来得快
         while(isInBloomFilter) {
             // 重新生成 10 进制压缩码
             newSequence = this.generateDecimalSequence(longUrl);
             // 10 进制转 62 进制
             newCompressionCode = ConversionUtils.X.encode62(newSequence, compressionCodeLength);
-            isInBloomFilter = compressionCodeBloom.mightContain(newCompressionCode);
+            isInBloomFilter = BloomFilterHelper.mightContain(newCompressionCode);
         }
 
 

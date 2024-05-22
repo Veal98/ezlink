@@ -101,6 +101,7 @@ public class UrlMapDomainService {
             this.saveUrlMapAndUpdateCompressCode(urlMapDO, compressionCodeDO);
 
             // 刷新缓存
+            // TODO，此处可改为删除缓存，防止缓存不一致问题
             urlMapCacheManager.refreshUrlMapCache(urlMapDO);
         } finally {
             // 判断要解锁的key是否被当前线程持有,防止出现 not locked by current thread 异常

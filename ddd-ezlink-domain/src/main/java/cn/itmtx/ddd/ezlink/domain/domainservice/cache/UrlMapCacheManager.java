@@ -1,14 +1,13 @@
 package cn.itmtx.ddd.ezlink.domain.domainservice.cache;
 
+import cn.itmtx.ddd.ezlink.component.bloomfilter.BloomFilterHelper;
 import cn.itmtx.ddd.ezlink.domain.domainobject.UrlMapDO;
 import cn.itmtx.ddd.ezlink.domain.domainservice.enums.CacheKeyEnum;
 import cn.itmtx.ddd.ezlink.domain.gateway.UrlMapGateway;
-import com.google.common.hash.BloomFilter;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -24,10 +23,6 @@ public class UrlMapCacheManager {
     @Autowired
     private UrlMapGateway urlMapGateway;
 
-    @Autowired
-    @Qualifier("compressionCodeBloom")
-    private BloomFilter<String> compressionCodeBloom;
-
     /**
      * 缓存预热阈值
      */
@@ -35,8 +30,6 @@ public class UrlMapCacheManager {
     private Integer preloadThreshold;
 
     @Autowired
-
-
     private final StringRedisTemplate stringRedisTemplate;
 
     public UrlMapCacheManager(StringRedisTemplate stringRedisTemplate) {
@@ -64,7 +57,7 @@ public class UrlMapCacheManager {
      */
     public UrlMapDO loadUrlMapFromCache(String compressionCode) {
         // BloomFilter, 防止缓存穿透
-        if (!compressionCodeBloom.mightContain(compressionCode)) {
+        if (!BloomFilterHelper.mightContain(compressionCode)) {
             log.info("The compressionCode [{}] not in BloomFilter.", compressionCode);
             return null;
         }
@@ -93,6 +86,14 @@ public class UrlMapCacheManager {
      */
     @PostConstruct
     public void preloadCache() {
+
+    }
+
+    /**
+     * TODO 恢复 BloomFilter 中的数据，防止系统重启 BloomFilter 中的数据丢失，从而导致压缩码冲突
+     */
+    @PostConstruct
+    public void recoverBloomFilter() {
 
     }
 }

@@ -1,5 +1,6 @@
 package cn.itmtx.ddd.ezlink.domain.domainservice.keygen;
 
+import cn.itmtx.ddd.ezlink.component.bloomfilter.BloomFilterHelper;
 import cn.itmtx.ddd.ezlink.domain.domainobject.SequenceAndCodeDO;
 import cn.itmtx.ddd.ezlink.domain.domainobject.UrlMapDO;
 import cn.itmtx.ddd.ezlink.domain.domainservice.cache.UrlMapCacheManager;
@@ -28,10 +29,6 @@ public class SequenceGenerator {
     static {
         DECIMAL_SEQUENCE_GENERATOR = loadGenerator();
     }
-
-    @Autowired
-    @Qualifier("compressionCodeBloom")
-    private BloomFilter<String> compressionCodeBloom;
 
     /**
      * 62 进制压缩码的长度
@@ -93,14 +90,14 @@ public class SequenceGenerator {
         String compressionCode = ConversionUtils.X.encode62(sequence, compressionCodeLength);
 
         // 处理冲突
-        boolean isInBloomFilter = compressionCodeBloom.mightContain(compressionCode);
+        boolean isInBloomFilter = BloomFilterHelper.mightContain(compressionCode);
         if (isInBloomFilter) {
-            sequence = DECIMAL_SEQUENCE_GENERATOR.fixConflict(longUrl, compressionCodeLength, compressionCodeBloom);
+            sequence = DECIMAL_SEQUENCE_GENERATOR.fixConflict(longUrl, compressionCodeLength);
             compressionCode = ConversionUtils.X.encode62(sequence, compressionCodeLength);
         }
 
         // compressionCode 存到 BloomFilter
-        compressionCodeBloom.put(compressionCode);
+        BloomFilterHelper.put(compressionCode);
         log.info("The compressionCodes [{}] has stored in bloomFilter.", compressionCode);
 
         // 返回 compressionCode 和 sequence
