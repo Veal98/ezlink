@@ -2,16 +2,16 @@ package cn.itmtx.ddd.ezlink.domain.domainservice;
 
 import cn.itmtx.ddd.ezlink.component.dl.lock.DistributedLockFactory;
 import cn.itmtx.ddd.ezlink.domain.domainobject.CompressionCodeDO;
+import cn.itmtx.ddd.ezlink.domain.domainobject.DomainConfDO;
+import cn.itmtx.ddd.ezlink.domain.domainobject.SequenceAndCodeDO;
+import cn.itmtx.ddd.ezlink.domain.domainobject.UrlMapDO;
 import cn.itmtx.ddd.ezlink.domain.domainservice.cache.UrlMapCacheManager;
 import cn.itmtx.ddd.ezlink.domain.domainservice.constant.UrlValidatorConstant;
-import cn.itmtx.ddd.ezlink.domain.domainservice.enums.CompressionCodeStatusEnum;
-import cn.itmtx.ddd.ezlink.domain.domainobject.DomainConfDO;
-import cn.itmtx.ddd.ezlink.domain.domainobject.UrlMapDO;
 import cn.itmtx.ddd.ezlink.domain.domainservice.context.TransformContext;
+import cn.itmtx.ddd.ezlink.domain.domainservice.enums.CompressionCodeStatusEnum;
 import cn.itmtx.ddd.ezlink.domain.domainservice.enums.LockKeyEnum;
 import cn.itmtx.ddd.ezlink.domain.domainservice.filter.TransformFilterChain;
 import cn.itmtx.ddd.ezlink.domain.domainservice.filter.TransformFilterChainFactory;
-import cn.itmtx.ddd.ezlink.domain.domainobject.SequenceAndCodeDO;
 import cn.itmtx.ddd.ezlink.domain.domainservice.keygen.SequenceGenerator;
 import cn.itmtx.ddd.ezlink.domain.gateway.CompressionCodeGateway;
 import cn.itmtx.ddd.ezlink.domain.gateway.DomainConfGateway;
@@ -27,7 +27,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import javax.annotation.Resource;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -35,7 +34,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class UrlMapDomainService {
 
-    @Resource(name = "${ezlink.generate.sequence-generator.type}SequenceGenerator")
+    @Autowired
     private SequenceGenerator sequenceGenerator;
 
     private final UrlValidator urlValidator = new UrlValidator(new String[]{UrlValidatorConstant.HTTP_PROTOCOL,
@@ -76,6 +75,7 @@ public class UrlMapDomainService {
      * @param urlMapDO
      * @return
      */
+    @Transactional(rollbackFor = Exception.class)
     public void createUrlMap(UrlMapDO urlMapDO) {
         RLock lock = distributedLockFactory.getLock(LockKeyEnum.CREATE_URL_MAP.getCode());
         try {

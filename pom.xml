@@ -18,7 +18,6 @@
         <module>ddd-ezlink-component-dl</module>
         <module>start</module>
         <module>ddd-ezlink-component-ratelimiter</module>
-
     </modules>
 
     <properties>

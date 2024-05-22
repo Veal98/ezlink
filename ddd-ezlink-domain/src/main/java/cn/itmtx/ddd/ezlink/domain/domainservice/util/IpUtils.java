@@ -10,10 +10,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * @author throwable
- * @version v1
- * @description IP提取工具
- * @since 2020/12/26 12:58
+ * IP提取工具
  */
 public enum IpUtils {
 
