@@ -2,15 +2,9 @@ package cn.itmtx.ddd.ezlink.domain.domainservice.keygen;
 
 import cn.itmtx.ddd.ezlink.component.bloomfilter.BloomFilterHelper;
 import cn.itmtx.ddd.ezlink.domain.domainobject.SequenceAndCodeDO;
-import cn.itmtx.ddd.ezlink.domain.domainobject.UrlMapDO;
-import cn.itmtx.ddd.ezlink.domain.domainservice.cache.UrlMapCacheManager;
 import cn.itmtx.ddd.ezlink.domain.domainservice.enums.SequenceGeneratorStrategyEnum;
 import cn.itmtx.ddd.ezlink.domain.domainservice.util.ConversionUtils;
-import com.google.common.hash.BloomFilter;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -24,11 +18,7 @@ import java.util.ServiceLoader;
 @Slf4j
 public class SequenceGenerator {
 
-    private final static DecimalSequenceGenerator DECIMAL_SEQUENCE_GENERATOR;
-
-    static {
-        DECIMAL_SEQUENCE_GENERATOR = loadGenerator();
-    }
+    private DecimalSequenceGenerator decimalSequenceGenerator;
 
     /**
      * 62 进制压缩码的长度
@@ -40,13 +30,17 @@ public class SequenceGenerator {
      * 压缩码生成策略
      */
     @Value("${ezlink.generate.sequence-generator.type}")
-    private static String strategy;
+    private String strategy;
 
     /**
      * 加载 10 进制压缩码生成器
      * @return
      */
-    private static DecimalSequenceGenerator loadGenerator() {
+    private DecimalSequenceGenerator loadGenerator() {
+        if (Objects.nonNull(decimalSequenceGenerator)) {
+            return decimalSequenceGenerator;
+        }
+
         SequenceGeneratorStrategyEnum strategyEnum = SequenceGeneratorStrategyEnum.findBy(strategy);
         // 如果找不到相应的 strategy 配置，则走 spi 机制查找用户自定义的 generator
         if (Objects.isNull(strategyEnum)) {
@@ -84,15 +78,17 @@ public class SequenceGenerator {
      * @return
      */
     public SequenceAndCodeDO generate(String longUrl) {
+        decimalSequenceGenerator = this.loadGenerator();
+
         // 生成 10 进制压缩码
-        long sequence = DECIMAL_SEQUENCE_GENERATOR.generateDecimalSequence(longUrl);
+        long sequence = decimalSequenceGenerator.generateDecimalSequence(longUrl);
         // 10 进制转 62 进制
         String compressionCode = ConversionUtils.X.encode62(sequence, compressionCodeLength);
 
         // 处理冲突
         boolean isInBloomFilter = BloomFilterHelper.mightContain(compressionCode);
         if (isInBloomFilter) {
-            sequence = DECIMAL_SEQUENCE_GENERATOR.fixConflict(longUrl, compressionCodeLength);
+            sequence = decimalSequenceGenerator.fixConflict(longUrl, compressionCodeLength);
             compressionCode = ConversionUtils.X.encode62(sequence, compressionCodeLength);
         }
 
