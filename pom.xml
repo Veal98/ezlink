@@ -18,6 +18,8 @@
         <module>ddd-ezlink-component-dl</module>
         <module>start</module>
         <module>ddd-ezlink-component-ratelimiter</module>
+        <module>ddd-ezlink-client</module>
+
     </modules>
 
     <properties>
@@ -81,7 +83,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-·
+
     <dependencyManagement>
         <dependencies>
             <dependency>
