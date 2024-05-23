@@ -19,6 +19,7 @@
         <module>start</module>
         <module>ddd-ezlink-component-ratelimiter</module>
         <module>ddd-ezlink-client</module>
+        <module>ddd-ezlink-component-token</module>
 
     </modules>
 

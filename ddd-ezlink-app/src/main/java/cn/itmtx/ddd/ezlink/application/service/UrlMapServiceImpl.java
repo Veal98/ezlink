@@ -1,14 +1,19 @@
 package cn.itmtx.ddd.ezlink.application.service;
 
 import cn.itmtx.ddd.ezlink.application.executor.command.UrlMapAddCmdExe;
+import cn.itmtx.ddd.ezlink.client.api.TokenService;
 import cn.itmtx.ddd.ezlink.client.api.UrlMapService;
 import cn.itmtx.ddd.ezlink.client.dto.command.UrlMapAddCmd;
-import cn.itmtx.ddd.ezlink.client.dto.data.UrlMapDTO;
+import cn.itmtx.ddd.ezlink.client.dto.data.UrlMapDto;
 import cn.itmtx.ddd.ezlink.client.dto.query.LongByShortQry;
+import cn.itmtx.ddd.ezlink.domain.exception.TokenUnValidException;
 import com.alibaba.cola.dto.SingleResponse;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 
 /**
@@ -22,13 +27,26 @@ public class UrlMapServiceImpl implements UrlMapService {
     @Autowired
     private UrlMapAddCmdExe urlMapAddCmdExe;
 
+    @Autowired
+    private TokenService tokenService;
+
     @Override
-    public SingleResponse<UrlMapDTO> createUrlMap(UrlMapAddCmd urlMapAddCmd) {
+    public SingleResponse<UrlMapDto> createUrlMap(UrlMapAddCmd urlMapAddCmd) {
+        if (Objects.isNull(urlMapAddCmd) || StringUtils.isEmpty(urlMapAddCmd.getLongUrl()) || StringUtils.isEmpty(urlMapAddCmd.getDescription())) {
+            throw new IllegalArgumentException("longUrl and description can't be empty.");
+        }
+
+        // TODO, accessToken 校验
+        Boolean validToken = tokenService.checkToken(urlMapAddCmd.getAccess()).getData();
+        if (!validToken) {
+            throw new TokenUnValidException();
+        }
+
         return urlMapAddCmdExe.execute(urlMapAddCmd);
     }
 
     @Override
-    public SingleResponse<UrlMapDTO> getLongByShort(LongByShortQry longByShortQry) {
+    public SingleResponse<UrlMapDto> getLongByShort(LongByShortQry longByShortQry) {
         // TODO
         return SingleResponse.of(null);
     }

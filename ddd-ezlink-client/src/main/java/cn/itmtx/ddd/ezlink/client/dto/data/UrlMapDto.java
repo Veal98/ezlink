@@ -2,7 +2,7 @@ package cn.itmtx.ddd.ezlink.client.dto.data;
 
 import com.alibaba.cola.dto.DTO;
 
-public class UrlMapDTO extends DTO {
+public class UrlMapDto extends DTO {
 
     String shortUrl;
 
