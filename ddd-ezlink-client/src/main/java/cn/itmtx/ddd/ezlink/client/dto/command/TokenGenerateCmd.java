@@ -2,11 +2,7 @@ package cn.itmtx.ddd.ezlink.client.dto.command;
 
 import com.alibaba.cola.dto.Command;
 
-/**
- * @Author jc.yin
- * @Date 2024/5/23
- * @Description
- **/
+
 public class TokenGenerateCmd extends Command {
 
     private Long appId;

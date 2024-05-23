@@ -7,6 +7,7 @@ import cn.itmtx.ddd.ezlink.client.dto.data.UrlMapDto;
 import cn.itmtx.ddd.ezlink.client.dto.query.LongByShortQry;
 import cn.itmtx.ddd.ezlink.component.ratelimiter.LimitType;
 import cn.itmtx.ddd.ezlink.component.ratelimiter.RateLimiter;
+import cn.itmtx.ddd.ezlink.domain.domainservice.token.TokenCheck;
 import com.alibaba.cola.dto.SingleResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ public class UrlMapController {
      */
     @PostMapping("/create")
     @RateLimiter(count = 3, time = 5, limitType = LimitType.IP)
+    @TokenCheck
     public SingleResponse<UrlMapDto> createUrlMap(ServerWebExchange exchange, @RequestBody UrlMapAddCmd urlMapAddCmd) {
         return urlMapService.createUrlMap(urlMapAddCmd);
     }

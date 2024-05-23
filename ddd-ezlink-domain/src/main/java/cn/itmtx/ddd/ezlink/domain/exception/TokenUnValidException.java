@@ -2,11 +2,6 @@ package cn.itmtx.ddd.ezlink.domain.exception;
 
 import com.alibaba.cola.exception.SysException;
 
-/**
- * @Author jc.yin
- * @Date 2024/5/23
- * @Description
- **/
 public class TokenUnValidException extends SysException {
 
     private static final String DEFAULT_ERR_CODE = "ACCESS_TOKEN_UN_VALID";

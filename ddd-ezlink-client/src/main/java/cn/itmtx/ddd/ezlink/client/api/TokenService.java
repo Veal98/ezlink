@@ -1,7 +1,6 @@
 package cn.itmtx.ddd.ezlink.client.api;
 
 import cn.itmtx.ddd.ezlink.client.dto.command.TokenGenerateCmd;
-import cn.itmtx.ddd.ezlink.client.dto.query.TokenQry;
 import com.alibaba.cola.dto.SingleResponse;
 
 /**
@@ -15,12 +14,4 @@ public interface TokenService {
      * @return
      */
     SingleResponse<String> generateToken(TokenGenerateCmd tokenGenerateCmd);
-
-    /**
-     * 校验 token
-     * @param tokenQry
-     * @return
-     */
-    SingleResponse<Boolean> checkToken(TokenQry tokenQry);
-
 }
