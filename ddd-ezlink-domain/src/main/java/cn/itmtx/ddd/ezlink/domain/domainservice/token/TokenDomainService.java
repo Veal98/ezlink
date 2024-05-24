@@ -22,6 +22,12 @@ public class TokenDomainService {
 
     public static final Integer APP_SECRET_LENGTH = 30;
 
+    public static final Long ONE_MINUTE_MILLIS = 60 * 1000L;
+
+
+    public static final Long ONE_HOUR_MILLIS = 60L * ONE_MINUTE_MILLIS;
+
+
     @Value("${ezlink.access.token.check}")
     private Boolean checkAccessToken;
 
@@ -30,6 +36,7 @@ public class TokenDomainService {
 
     /**
      * 注册 appId，生成 appSecret
+     *
      * @param appId
      * @return
      */
@@ -81,15 +88,13 @@ public class TokenDomainService {
                     Math.min(
                             DateUtil.dateToLong(curDbToken.getAccessTokenExpireTimestamp()),
                             System.currentTimeMillis())
-                            + 5 * 60 * 1000));
+                            + 5 * ONE_MINUTE_MILLIS));
         }
 
         // 更新 access_token
         updateTokenDo.setAccessToken(accessToken);
-        updateTokenDo.setAccessTokenExpireTimestamp(DateUtil.longToDate(System.currentTimeMillis() + 2 * 60 * 60 * 1000));
-
+        updateTokenDo.setAccessTokenExpireTimestamp(DateUtil.longToDate(System.currentTimeMillis() + 2 * ONE_HOUR_MILLIS));
         tokenGateway.updateByAppIdAndSecret(updateTokenDo);
-
 
         return accessToken;
     }
