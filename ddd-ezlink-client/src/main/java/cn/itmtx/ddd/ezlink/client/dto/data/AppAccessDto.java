@@ -1,9 +1,6 @@
-package cn.itmtx.ddd.ezlink.client.dto.command;
+package cn.itmtx.ddd.ezlink.client.dto.data;
 
-import com.alibaba.cola.dto.Command;
-
-
-public class TokenGenerateCmd extends Command {
+public class AppAccessDto {
 
     private String appId;
 

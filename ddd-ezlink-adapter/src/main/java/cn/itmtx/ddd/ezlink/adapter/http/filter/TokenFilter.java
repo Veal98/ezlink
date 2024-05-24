@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
+import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -19,11 +20,8 @@ import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
-/**
- * @Author jc.yin
- * @Date 2024/5/23
- * @Description
- **/
+import java.nio.charset.StandardCharsets;
+
 @Configuration
 public class TokenFilter implements WebFilter, Ordered {
 
@@ -52,8 +50,8 @@ public class TokenFilter implements WebFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         // 获取Response、Request
-        ServerHttpResponse res = exchange.getResponse();
-        ServerHttpRequest request = exchange.getRequest();
+        ServerHttpResponse serverHttpResponse = exchange.getResponse();
+        ServerHttpRequest serverHttpRequest = exchange.getRequest();
 
         // 获取请求对应的HandlerMethod
         Mono<HandlerMethod> handlerMethodMono = requestMappingHandlerMapping.getHandler(exchange).cast(HandlerMethod.class);
@@ -66,7 +64,7 @@ public class TokenFilter implements WebFilter, Ordered {
                 return ;
             }
 
-            HttpHeaders headers = request.getHeaders();
+            HttpHeaders headers = serverHttpRequest.getHeaders();
             String accessToken = headers.getFirst(ACCESS_TOKEN);
             String appId = headers.getFirst(APP_ID);
             String appSecret = headers.getFirst(APP_SECRET);
@@ -80,8 +78,17 @@ public class TokenFilter implements WebFilter, Ordered {
         }
         TokenUnValidException tokenUnValidException = new TokenUnValidException();
         Response response = Response.buildFailure(tokenUnValidException.getErrCode(), tokenUnValidException.getMessage());
-        res.setStatusCode(HttpStatus.NON_AUTHORITATIVE_INFORMATION);
-        return res.writeWith(Mono.just(res.bufferFactory().wrap(new Gson().toJson(response).getBytes())));
+        serverHttpResponse.setStatusCode(HttpStatus.NON_AUTHORITATIVE_INFORMATION);
+        return serverHttpResponse.writeWith(Mono.just(getResponseBuffer(response, serverHttpResponse)));
+    }
+
+
+    public DataBuffer getResponseBuffer(Response response, ServerHttpResponse serverHttpResponse){
+        // JSON转换
+        byte[] bytes = new Gson().toJson(response).getBytes(StandardCharsets.UTF_8);
+
+        // 调用bufferFactory方法,生成DataBuffer对象
+        return serverHttpResponse.bufferFactory().wrap(bytes);
     }
 
 }

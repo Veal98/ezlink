@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.itmtx.ddd.ezlink.infrastructure.token.mapper.AccessTokenMapper">
+  <resultMap id="BaseResultMap" type="cn.itmtx.ddd.ezlink.infrastructure.token.po.AccessToken">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="app_id" jdbcType="CHAR" property="appId" />
+    <result column="app_secret" jdbcType="VARCHAR" property="appSecret" />
+    <result column="access_token" jdbcType="VARCHAR" property="accessToken" />
+    <result column="access_token_expire_timestamp" jdbcType="TIMESTAMP" property="accessTokenExpireTimestamp" />
+    <result column="old_access_token" jdbcType="VARCHAR" property="oldAccessToken" />
+    <result column="old_access_token_expire_timestamp" jdbcType="TIMESTAMP" property="oldAccessTokenExpireTimestamp" />
+    <result column="available_count" jdbcType="INTEGER" property="availableCount" />
+    <result column="datachange_createtime" jdbcType="TIMESTAMP" property="datachangeCreatetime" />
+    <result column="datachange_lasttime" jdbcType="TIMESTAMP" property="datachangeLasttime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, app_id, app_secret, access_token, access_token_expire_timestamp, old_access_token, 
+    old_access_token_expire_timestamp, available_count, datachange_createtime, datachange_lasttime
+  </sql>
+  <select id="selectByExample" parameterType="cn.itmtx.ddd.ezlink.infrastructure.token.po.AccessTokenExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from access_token
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from access_token
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from access_token
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.itmtx.ddd.ezlink.infrastructure.token.po.AccessTokenExample">
+    delete from access_token
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.itmtx.ddd.ezlink.infrastructure.token.po.AccessToken">
+    insert into access_token (id, app_id, app_secret, 
+      access_token, access_token_expire_timestamp, 
+      old_access_token, old_access_token_expire_timestamp, 
+      available_count, datachange_createtime, 
+      datachange_lasttime)
+    values (#{id,jdbcType=INTEGER}, #{appId,jdbcType=CHAR}, #{appSecret,jdbcType=VARCHAR}, 
+      #{accessToken,jdbcType=VARCHAR}, #{accessTokenExpireTimestamp,jdbcType=TIMESTAMP}, 
+      #{oldAccessToken,jdbcType=VARCHAR}, #{oldAccessTokenExpireTimestamp,jdbcType=TIMESTAMP}, 
+      #{availableCount,jdbcType=INTEGER}, #{datachangeCreatetime,jdbcType=TIMESTAMP}, 
+      #{datachangeLasttime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.itmtx.ddd.ezlink.infrastructure.token.po.AccessToken">
+    insert into access_token
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="appId != null">
+        app_id,
+      </if>
+      <if test="appSecret != null">
+        app_secret,
+      </if>
+      <if test="accessToken != null">
+        access_token,
+      </if>
+      <if test="accessTokenExpireTimestamp != null">
+        access_token_expire_timestamp,
+      </if>
+      <if test="oldAccessToken != null">
+        old_access_token,
+      </if>
+      <if test="oldAccessTokenExpireTimestamp != null">
+        old_access_token_expire_timestamp,
+      </if>
+      <if test="availableCount != null">
+        available_count,
+      </if>
+      <if test="datachangeCreatetime != null">
+        datachange_createtime,
+      </if>
+      <if test="datachangeLasttime != null">
+        datachange_lasttime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null">
+        #{appId,jdbcType=CHAR},
+      </if>
+      <if test="appSecret != null">
+        #{appSecret,jdbcType=VARCHAR},
+      </if>
+      <if test="accessToken != null">
+        #{accessToken,jdbcType=VARCHAR},
+      </if>
+      <if test="accessTokenExpireTimestamp != null">
+        #{accessTokenExpireTimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oldAccessToken != null">
+        #{oldAccessToken,jdbcType=VARCHAR},
+      </if>
+      <if test="oldAccessTokenExpireTimestamp != null">
+        #{oldAccessTokenExpireTimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="availableCount != null">
+        #{availableCount,jdbcType=INTEGER},
+      </if>
+      <if test="datachangeCreatetime != null">
+        #{datachangeCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="datachangeLasttime != null">
+        #{datachangeLasttime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map">
+    update access_token
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.appId != null">
+        app_id = #{record.appId,jdbcType=CHAR},
+      </if>
+      <if test="record.appSecret != null">
+        app_secret = #{record.appSecret,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accessToken != null">
+        access_token = #{record.accessToken,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accessTokenExpireTimestamp != null">
+        access_token_expire_timestamp = #{record.accessTokenExpireTimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.oldAccessToken != null">
+        old_access_token = #{record.oldAccessToken,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oldAccessTokenExpireTimestamp != null">
+        old_access_token_expire_timestamp = #{record.oldAccessTokenExpireTimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.availableCount != null">
+        available_count = #{record.availableCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.datachangeCreatetime != null">
+        datachange_createtime = #{record.datachangeCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.datachangeLasttime != null">
+        datachange_lasttime = #{record.datachangeLasttime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update access_token
+    set id = #{record.id,jdbcType=INTEGER},
+      app_id = #{record.appId,jdbcType=CHAR},
+      app_secret = #{record.appSecret,jdbcType=VARCHAR},
+      access_token = #{record.accessToken,jdbcType=VARCHAR},
+      access_token_expire_timestamp = #{record.accessTokenExpireTimestamp,jdbcType=TIMESTAMP},
+      old_access_token = #{record.oldAccessToken,jdbcType=VARCHAR},
+      old_access_token_expire_timestamp = #{record.oldAccessTokenExpireTimestamp,jdbcType=TIMESTAMP},
+      available_count = #{record.availableCount,jdbcType=INTEGER},
+      datachange_createtime = #{record.datachangeCreatetime,jdbcType=TIMESTAMP},
+      datachange_lasttime = #{record.datachangeLasttime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.itmtx.ddd.ezlink.infrastructure.token.po.AccessToken">
+    update access_token
+    <set>
+      <if test="appId != null">
+        app_id = #{appId,jdbcType=CHAR},
+      </if>
+      <if test="appSecret != null">
+        app_secret = #{appSecret,jdbcType=VARCHAR},
+      </if>
+      <if test="accessToken != null">
+        access_token = #{accessToken,jdbcType=VARCHAR},
+      </if>
+      <if test="accessTokenExpireTimestamp != null">
+        access_token_expire_timestamp = #{accessTokenExpireTimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oldAccessToken != null">
+        old_access_token = #{oldAccessToken,jdbcType=VARCHAR},
+      </if>
+      <if test="oldAccessTokenExpireTimestamp != null">
+        old_access_token_expire_timestamp = #{oldAccessTokenExpireTimestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="availableCount != null">
+        available_count = #{availableCount,jdbcType=INTEGER},
+      </if>
+      <if test="datachangeCreatetime != null">
+        datachange_createtime = #{datachangeCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="datachangeLasttime != null">
+        datachange_lasttime = #{datachangeLasttime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.itmtx.ddd.ezlink.infrastructure.token.po.AccessToken">
+    update access_token
+    set app_id = #{appId,jdbcType=CHAR},
+      app_secret = #{appSecret,jdbcType=VARCHAR},
+      access_token = #{accessToken,jdbcType=VARCHAR},
+      access_token_expire_timestamp = #{accessTokenExpireTimestamp,jdbcType=TIMESTAMP},
+      old_access_token = #{oldAccessToken,jdbcType=VARCHAR},
+      old_access_token_expire_timestamp = #{oldAccessTokenExpireTimestamp,jdbcType=TIMESTAMP},
+      available_count = #{availableCount,jdbcType=INTEGER},
+      datachange_createtime = #{datachangeCreatetime,jdbcType=TIMESTAMP},
+      datachange_lasttime = #{datachangeLasttime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
