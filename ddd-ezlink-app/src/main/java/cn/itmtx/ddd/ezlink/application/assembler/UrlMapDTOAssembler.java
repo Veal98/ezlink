@@ -1,7 +1,7 @@
 package cn.itmtx.ddd.ezlink.application.assembler;
 
 import cn.itmtx.ddd.ezlink.client.dto.command.UrlMapAddCmd;
-import cn.itmtx.ddd.ezlink.client.dto.data.UrlMapDTO;
+import cn.itmtx.ddd.ezlink.client.dto.data.UrlMapDto;
 import cn.itmtx.ddd.ezlink.domain.domainobject.UrlMapDO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
@@ -11,14 +11,14 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class UrlMapDTOAssembler {
-    public UrlMapDO toDO(UrlMapDTO urlMapDTO) {
+    public UrlMapDO toDO(UrlMapDto urlMapDTO) {
         UrlMapDO urlMapDO = new UrlMapDO();
         BeanUtils.copyProperties(urlMapDTO, urlMapDO);
         return urlMapDO;
     }
 
-    public UrlMapDTO toDTO(UrlMapDO urlMapDO) {
-        UrlMapDTO urlMapDTO = new UrlMapDTO();
+    public UrlMapDto toDTO(UrlMapDO urlMapDO) {
+        UrlMapDto urlMapDTO = new UrlMapDto();
         BeanUtils.copyProperties(urlMapDO, urlMapDTO);
         return urlMapDTO;
     }

@@ -3,10 +3,11 @@ package cn.itmtx.ddd.ezlink.adapter.http;
 import cn.itmtx.ddd.ezlink.adapter.constant.API;
 import cn.itmtx.ddd.ezlink.client.api.UrlMapService;
 import cn.itmtx.ddd.ezlink.client.dto.command.UrlMapAddCmd;
-import cn.itmtx.ddd.ezlink.client.dto.data.UrlMapDTO;
+import cn.itmtx.ddd.ezlink.client.dto.data.UrlMapDto;
 import cn.itmtx.ddd.ezlink.client.dto.query.LongByShortQry;
 import cn.itmtx.ddd.ezlink.component.ratelimiter.LimitType;
 import cn.itmtx.ddd.ezlink.component.ratelimiter.RateLimiter;
+import cn.itmtx.ddd.ezlink.domain.domainservice.token.TokenCheck;
 import com.alibaba.cola.dto.SingleResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,8 @@ public class UrlMapController {
      */
     @PostMapping("/create")
     @RateLimiter(count = 3, time = 5, limitType = LimitType.IP)
-    public SingleResponse<UrlMapDTO> createUrlMap(ServerWebExchange exchange, @RequestBody UrlMapAddCmd urlMapAddCmd) {
+    @TokenCheck
+    public SingleResponse<UrlMapDto> createUrlMap(ServerWebExchange exchange, @RequestBody UrlMapAddCmd urlMapAddCmd) {
         return urlMapService.createUrlMap(urlMapAddCmd);
     }
 
@@ -38,7 +40,8 @@ public class UrlMapController {
      * @param longByShortQry
      * @return
      */
-    public SingleResponse<UrlMapDTO> getLongByShort(@RequestBody LongByShortQry longByShortQry) {
+    @PostMapping("/findBy")
+    public SingleResponse<UrlMapDto> getLongByShort(@RequestBody LongByShortQry longByShortQry) {
         return urlMapService.getLongByShort(longByShortQry);
     }
 }
