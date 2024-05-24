@@ -27,10 +27,6 @@ public class TokenDomainService {
 
     public static final Long ONE_HOUR_MILLIS = 60L * ONE_MINUTE_MILLIS;
 
-
-    @Value("${ezlink.access.token.check}")
-    private Boolean checkAccessToken;
-
     @Autowired
     private TokenGateway tokenGateway;
 
