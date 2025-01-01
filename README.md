@@ -6,6 +6,8 @@
 
 Github：[https://github.com/itmtx/ezlink](https://github.com/itmtx/ezlink)
 
+项目教程：https://itmtx.cn/column/17
+
 ## 什么是短链
 
 比如将 https://flowus.cn/veal/share/3306b991-e1e3-4c92-9105-95abf086ae4e 缩短为 https://sourl.cn/aY95qu，点击后面的短链接将会重定向到前面的长链接。
