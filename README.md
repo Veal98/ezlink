@@ -6,8 +6,6 @@
 
 Github：[https://github.com/itmtx/ezlink](https://github.com/itmtx/ezlink)
 
-⚠️ 注意，这个仓库目前是 private 的，**购买了【编程满天星年会员】的小伙伴跟我说下你的 Github 邮箱，确认邀请邮件后即可拥有 EZLink 仓库的访问权限**
-
 ## 什么是短链
 
 比如将 https://flowus.cn/veal/share/3306b991-e1e3-4c92-9105-95abf086ae4e 缩短为 https://sourl.cn/aY95qu，点击后面的短链接将会重定向到前面的长链接。
